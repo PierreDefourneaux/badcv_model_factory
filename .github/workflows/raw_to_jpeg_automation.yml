@@ -35,8 +35,8 @@ jobs:
       - name: Run raw_to_jpeg.py
         env:
           MDP_MAIL: ${{ secrets.MDP_MAIL }}
-          ADRESS: ${{ secrets.ADRESS }}
-          DESTINATAIRE: ${{ secrets.DESTINATAIRE }}
+          MAIL_SENDER_ADRESS: ${{ secrets.MAIL_SENDER_ADRESS }}
+          MAIL_RECIEVER: ${{ secrets.MAIL_RECIEVER }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
         run: |
