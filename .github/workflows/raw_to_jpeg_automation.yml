@@ -32,12 +32,12 @@ jobs:
           pwd
           ls -la
           pip list
-    #   - name: Run raw_to_jpeg.py
-    #     env:
-    #       MDP_MAIL: ${{ secrets.MDP_MAIL }}
-    #       ADRESS: ${{ secrets.ADRESS }}
-    #       DESTINATAIRE: ${{ secrets.DESTINATAIRE }}
-    #       SMTP_HOST: ${{ secrets.SMTP_HOST }}
-    #       SMTP_PORT: ${{ secrets.SMTP_PORT }}
-        # run: |
-        #   python raw_to_jpeg.py
+      - name: Run raw_to_jpeg.py
+        env:
+          MDP_MAIL: ${{ secrets.MDP_MAIL }}
+          ADRESS: ${{ secrets.ADRESS }}
+          DESTINATAIRE: ${{ secrets.DESTINATAIRE }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+        run: |
+          python raw_to_jpeg.py
