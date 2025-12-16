@@ -1,0 +1,154 @@
+import os
+from PIL import Image
+from pillow_heif import register_heif_opener
+import cv2
+import logging
+from logging.handlers import SMTPHandler
+import smtplib
+from email.message import EmailMessage
+from dotenv import load_dotenv
+
+# ----------------------------------- IMPORT DES SECRETS GITHUB------------------------------------
+load_dotenv()
+MDP_MAIL = os.getenv("MDP_MAIL")
+MAIL_SENDER_ADRESS = os.getenv("MAIL_SENDER_ADRESS")
+MAIL_RECIEVER = os.getenv("MAIL_RECIEVER")
+SMTP_HOST = os.getenv("SMTP_HOST")
+SMTP_PORT = os.getenv("SMTP_PORT")
+
+# ------------------------------------------------ CONFIG LOGGING ---------------------------------
+logger = logging.getLogger(__name__)
+LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
+LOG_FILE = os.path.join(LOG_DIR, "raw_to_jpeg.log")
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    handlers=[logging.FileHandler(LOG_FILE, encoding="utf-8")])
+
+# ------------------------------------ CONFIG REPORTING MAIL --------------------------------------
+
+mail_handler = SMTPHandler(
+    mailhost=(SMTP_HOST, 587),
+    fromaddr=MAIL_SENDER_ADRESS,
+    toaddrs=[MAIL_RECIEVER],
+    subject="REPORT RAW TO JPEG IN BADIA PROJECT",
+    credentials=(MAIL_SENDER_ADRESS, MDP_MAIL),
+    secure=()
+)
+mail_handler.setLevel(logging.CRITICAL)
+logger.addHandler(mail_handler)
+
+logger.info("Début d'une execution raw_to_jpeg.py")
+
+
+# ------------------------------------------------ FONCTIONS -----------------------------------------
+def envoyer_un_mail_reporting(nombre_images, MAIL_RECIEVER):
+    try:
+        msg = EmailMessage()
+        msg["Subject"] = "REPORT RAW TO JPEG IN BADIA PROJECT"
+        msg["From"] = MAIL_SENDER_ADRESS
+        msg["To"] = MAIL_RECIEVER
+        msg.set_content(f"""
+            Le script raw_to_jpeg.py vient de se terminer.\n
+            Il y a actuellement {nombre_images} images."""
+            )
+
+        with smtplib.SMTP(SMTP_HOST, int(SMTP_PORT)) as smtp:
+            smtp.starttls()
+            smtp.login(MAIL_SENDER_ADRESS, MDP_MAIL)
+            smtp.send_message(msg)
+    except Exception as e:
+        logger.critical(f"Erreur lors de l'envoi de mail : {e}")
+
+# ------------------------------------------------ PHOTOS -----------------------------------------
+# register_heif_opener() # ajoute un décodeur HEIF pou PIL
+# EXTENSIONS_IMAGES = (".heic", ".heif", ".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp", ".webp")
+# wrong_ext_pic =0
+# already_treated_pic = 0
+# new_rec_pic =0
+# for file in os.listdir(raw_pictures_folder):
+#     if not file.lower().endswith(EXTENSIONS_IMAGES):
+#         logger.info(f"{file}: extension incompatible")
+#         wrong_ext_pic +=1
+#         continue
+#     jpeg_name = file.rsplit(".", 1)[0] + ".jpg" # le 1 dans rsplit c'est 1 coupure (part toujours de la droite)
+#     jpeg_path = os.path.join(destination_folder, jpeg_name)
+#     if os.path.exists(jpeg_path):
+#         already_treated_pic += 1
+#         continue
+#     img = Image.open(os.path.join(raw_pictures_folder, file))
+#     img.save(jpeg_path, format="JPEG", quality=95)
+#     new_rec_pic += 1
+# logger.info(f"""Depuis le dossier photos_terrains_raw :
+#     {new_rec_pic} nouvelles images enregistrées,
+#     {already_treated_pic} images laissées car déjà traitées,
+#     {wrong_ext_pic} fichiers non traités car ayant une extension incompatible""")
+
+# ------------------------------------------------ VIDEOS ------------------------------------------------------
+# wrong_ext_vid =0
+# already_treated_vid = 0
+# new_rec_vid =0
+# new_video_names = []
+# new_saved_pics_counts = []
+# with open(treated_videos_path, "r", encoding="utf-8") as f:
+#     treated_videos = set(line.strip() for line in f if line.strip())
+# for video_file in os.listdir(raw_videos_folder):
+#     if not video_file.lower().endswith((".mp4", ".mov", ".avi", ".mkv")):
+#         logger.info(f"{video_file}: extension non compatible")
+#         wrong_ext_vid += 1
+#         continue
+#     video_path = os.path.join(raw_videos_folder, video_file)
+#     video_name = os.path.splitext(video_file)[0] #autre manière de split : coupe à l'extension
+#     if video_name in treated_videos:
+#         already_treated_vid += 1
+#         continue
+#     cap = cv2.VideoCapture(video_path)
+#     if not cap.isOpened():
+#         logger.info(f"Impossible d'ouvrir {video_file}")
+#         continue
+#     fps = cap.get(cv2.CAP_PROP_FPS)
+#     if fps <= 0:
+#         logger.info(f"FPS invalide pour {video_file}")
+#         cap.release()
+#         continue
+#     frame_interval = int(round(fps)) # pour enregistrer une image par seconde
+#     frame_idx = 0
+#     saved_idx = 0
+#     # Début de la boucle de frames
+#     while True:
+#         not_seen_frame_label, frame = cap.read()
+#         if not not_seen_frame_label:
+#             break
+#         if frame_idx % frame_interval == 0: # si frame_idx est un multiple entier de frame_interval
+#             jpeg_name = f"{video_name}_frame_{saved_idx:06d}.jpg"
+#             jpeg_path = os.path.join(destination_folder, jpeg_name)
+#             if not os.path.exists(jpeg_path):
+#                 cv2.imwrite(jpeg_path, frame)
+#             saved_idx += 1
+#         frame_idx += 1
+#     with open(treated_videos_path, "a", encoding="utf-8") as f:
+#         f.write(video_name + "\n")
+#     treated_videos.add(video_name)
+#     cap.release()
+#     new_rec_vid +=1
+#     new_video_names.append(video_name)
+#     new_saved_pics_counts.append(saved_idx)
+# logger.info(f"""Depuis le dossier videos_terrains_raw :
+#     {new_rec_vid} nouvelles vidéos traitées : {new_video_names},
+#     cela représente {new_saved_pics_counts} nouvelles images,
+#     {already_treated_vid} vidéos laissées car déjà traitées,
+#     {wrong_ext_vid} fichiers non traités car ayant une extension incompatible""")
+
+# ------------------------------------------------ RAPPORT ------------------------------------------------------
+# not_jpeg = 0
+# for file in os.listdir(destination_folder):
+#     if not file.lower().endswith(('.jpg', '.jpeg')):
+#         logger.warning(f"Le fichier {file} n'est pas un jpg")
+#         not_jpeg += 1
+# if not_jpeg != 0:
+#     logger.warning(f"{not_jpeg} fichier(s) ne sont pas des jpg dans photos_terrain_clean")
+# nombre_images = len(os.listdir(destination_folder))
+# logger.info(f"AU TOTAL : {nombre_images} images dans photos_terrain_clean\n\n")
+nombre_images = 5
+envoyer_un_mail_reporting(nombre_images, MAIL_RECIEVER)
