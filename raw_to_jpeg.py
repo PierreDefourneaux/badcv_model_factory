@@ -51,8 +51,7 @@ def envoyer_un_mail_reporting(nombre_images, MAIL_RECIEVER):
         msg["To"] = MAIL_RECIEVER
         msg.set_content(f"""
             Le script raw_to_jpeg.py vient de se terminer.\n
-            Il y a actuellement {nombre_images} images."""
-            )
+            Il y a actuellement {nombre_images} images.""")
 
         with smtplib.SMTP(SMTP_HOST, int(SMTP_PORT)) as smtp:
             smtp.starttls()

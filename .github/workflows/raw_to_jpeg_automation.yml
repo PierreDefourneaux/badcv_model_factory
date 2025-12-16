@@ -41,3 +41,8 @@ jobs:
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
         run: |
           python raw_to_jpeg.py
+      - name: Persist log file
+        uses: actions/upload-artifact@v4
+        with:
+          name: last_log_file
+          path: ./logs/raw_to_jpeg.log
