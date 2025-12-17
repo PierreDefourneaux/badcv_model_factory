@@ -52,14 +52,14 @@ mail_handler = SMTPHandler(
     mailhost=(SMTP_HOST, 587),
     fromaddr=MAIL_SENDER_ADRESS,
     toaddrs=[MAIL_RECIEVER],
-    subject="REPORT RAW TO JPEG IN BADIA PROJECT",
+    subject="ERROR IN RAW TO JPEG IN BADIA PROJECT",
     credentials=(MAIL_SENDER_ADRESS, MDP_MAIL),
     secure=()
 )
 mail_handler.setLevel(logging.CRITICAL)
 logger.addHandler(mail_handler)
 
-logger.info("Début d'une execution raw_to_jpeg.py")
+
 
 
 # ------------------------------------------------ FONCTIONS -----------------------------------------
@@ -117,7 +117,7 @@ def get_drive_service():
         return None
 
 # ----------------------------------- FONCTIONS DRIVE ----------------------------------
-def get_all_existing_names(service, folder_id):
+def get_over_1000_existing_names(service, folder_id):
     """Récupère TOUS les noms de fichiers d'un dossier, peu importe le nombre en gérant la limite de 1000 de google drive."""
     names = set()
     page_token = None
@@ -132,8 +132,7 @@ def get_all_existing_names(service, folder_id):
             names.add(f['name'])
         page_token = results.get('nextPageToken')
         if not page_token:
-            break
-    logger.info(f"Nombre de fichiers : {len(names)}")       
+            break      
     return names
 
 def process_photos(service, existing_clean_files):
@@ -144,6 +143,8 @@ def process_photos(service, existing_clean_files):
     ).execute()
     raw_files = results_raw.get('files', [])
     logger.info(f"Nombre de fichiers dans photos clean :{len(existing_clean_files)}")
+    if len(raw_files)>5:
+        logger.critical(f"Le seuil de 5 fichiers dans photos raw a été dépassé:{len(raw_files)}")
     logger.info(f"Nombre de fichiers dans photos raw :{len(raw_files)}")
 
     # wrong_ext_pic = 0
@@ -216,9 +217,10 @@ def process_photos(service, existing_clean_files):
 # ----------------------------------- EXECUTION ----------------------------------------
 
 if __name__ == "__main__":
+    logger.info("Début d'une execution raw_to_jpeg.py")
     try:
         service = get_drive_service()
-        existing_clean_files = get_all_existing_names(service, CLEANED_DATA_FOLDER_ID)
+        existing_clean_files = get_over_1000_existing_names(service, CLEANED_DATA_FOLDER_ID)
         process_photos(service, existing_clean_files)
     except Exception as e:
         logger.error(f"Une erreur est survenue : {e}")
