@@ -9,6 +9,7 @@ from email.message import EmailMessage
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import json
+import sys
 
 import io
 from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
@@ -26,7 +27,7 @@ SMTP_PORT = os.getenv("SMTP_PORT")
 ROOT_FOLDER_ID = os.getenv("ROOT_FOLDER_ID")
 # VIDEO_RAW_FOLDER_NAME = os.getenv("VIDEO_RAW_FOLDER_NAME")
 # VIDEO_RAW_FOLDER_ID = os.getenv("VIDEO_RAW_FOLDER_ID")
-# PHOTO_RAW_FOLDER_NAME = os.getenv("PHOTO_RAW_FOLDER_NAME")
+PHOTO_RAW_FOLDER_NAME = os.getenv("PHOTO_RAW_FOLDER_NAME")
 PHOTO_RAW_FOLDER_ID = os.getenv("PHOTO_RAW_FOLDER_ID")
 CLEANED_DATA_FOLDER_NAME = os.getenv("CLEANED_DATA_FOLDER_NAME")
 CLEANED_DATA_FOLDER_ID = os.getenv("CLEANED_DATA_FOLDER_ID")
@@ -52,7 +53,7 @@ mail_handler = SMTPHandler(
     mailhost=(SMTP_HOST, 587),
     fromaddr=MAIL_SENDER_ADRESS,
     toaddrs=[MAIL_RECIEVER],
-    subject="ERROR IN RAW TO JPEG IN BADIA PROJECT",
+    subject="CRITICAL EVENT IN RAW TO JPEG IN BADIA PROJECT",
     credentials=(MAIL_SENDER_ADRESS, MDP_MAIL),
     secure=()
 )
@@ -135,17 +136,29 @@ def get_over_1000_existing_names(service, folder_id):
             break      
     return names
 
-def process_photos(service, existing_clean_files):
+def process_photos(service, existing_clean_files, PHOTO_RAW_FOLDER_NAME):
     # Lister les fichiers dans RAW
     results_raw = service.files().list(
         q=f"'{PHOTO_RAW_FOLDER_ID}' in parents and trashed = false",
         fields="files(id, name)"
     ).execute()
     raw_files = results_raw.get('files', [])
+
     logger.info(f"Nombre de fichiers dans photos clean :{len(existing_clean_files)}")
     if len(raw_files)>5:
-        logger.critical(f"Le seuil de 5 fichiers dans photos raw a été dépassé:{len(raw_files)}")
-    logger.info(f"Nombre de fichiers dans photos raw :{len(raw_files)}")
+        logger.critical(
+            f"Il y a {len(raw_files)} fichiers dans {PHOTO_RAW_FOLDER_NAME}. "
+            f"Le seuil bloquant de 800 fichiers dans photos raw sera bientôt atteint. "
+            f"Il faut déplacer les fichiers dans le dossier 'archives'. "
+            )
+    elif len(raw_files)>8:
+        logger.critical(
+            f"INTERRUPTION DU SCRIPT : {len(raw_files)} fichiers trouvés. "
+            f"Le seuil maximal de 800 est dépassé. Nettoyage requis dans {PHOTO_RAW_FOLDER_NAME}."
+            )
+        sys.exit(1)
+    else :
+        logger.info(f"Nombre de fichiers dans photos raw :{len(raw_files)}")
 
     # wrong_ext_pic = 0
     # already_treated_pic = 0
@@ -221,7 +234,7 @@ if __name__ == "__main__":
     try:
         service = get_drive_service()
         existing_clean_files = get_over_1000_existing_names(service, CLEANED_DATA_FOLDER_ID)
-        process_photos(service, existing_clean_files)
+        process_photos(service, existing_clean_files, PHOTO_RAW_FOLDER_NAME)
     except Exception as e:
         logger.error(f"Une erreur est survenue : {e}")
 
