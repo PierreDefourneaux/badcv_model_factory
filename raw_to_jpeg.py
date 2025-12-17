@@ -80,11 +80,7 @@ def envoyer_un_mail_reporting(nombre_images, MAIL_RECIEVER):
     except Exception as e:
         logger.critical(f"Erreur lors de l'envoi de mail : {e}")
 
-# ------------------------------------------- CONSTRUIRE L'ACCES A GOOGLE DRIVE -------------------
-
-
 # ----------------------------------- AUTHENTIFICATION ---------------------------------
-
 def get_drive_service():
     """Authentification avec le Compte de Service (Local ou GitHub)."""
     try:
@@ -121,31 +117,10 @@ def get_drive_service():
         return None
 
 # ----------------------------------- FONCTIONS DRIVE ----------------------------------
-
-def find_folder_id(service, folder_name):
-    """Trouve l'ID d'un dossier par son nom."""
-    query = f"name = '{folder_name}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
-    results = service.files().list(q=query, fields="files(id, name)").execute()
-    items = results.get('files', [])
-    if not items:
-        return None
-    return items[0]['id']
-
-def list_subfolders(service, parent_id):
-    """Liste les dossiers contenus dans le dossier parent."""
-    query = f"'{parent_id}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
-    results = service.files().list(q=query, fields="files(id, name)").execute()
-    return results.get('files', [])
-
-
-################################################################################################################################
-################################################################################################################################
-################################################################################################################################
 def get_all_existing_names(service, folder_id):
     """Récupère TOUS les noms de fichiers d'un dossier, peu importe le nombre en gérant la limite de 1000 de google drive."""
     names = set()
     page_token = None
-    
     while True:
         results = service.files().list(
             q=f"'{folder_id}' in parents and trashed = false",
@@ -153,93 +128,85 @@ def get_all_existing_names(service, folder_id):
             pageSize=1000,
             pageToken=page_token
         ).execute()
-        
         for f in results.get('files', []):
             names.add(f['name'])
-            
         page_token = results.get('nextPageToken')
         if not page_token:
             break
     logger.info(f"Nombre de fichiers : {len(names)}")       
     return names
 
-def process_photos(service, parent_id):
-    # Lister les fichiers déjà présents dans CLEAN (pour éviter les doublons)
-    results_clean = service.files().list(
-        # syntaxe spécifique du langage de requête de l'API Google Drive
-        q=f"'{CLEANED_DATA_FOLDER_ID}' in parents and trashed = false",
-        fields="files(name)"
-    ).execute()
-    existing_clean_files = {f['name'] for f in results_clean.get('files', [])}
-
+def process_photos(service, existing_clean_files):
     # Lister les fichiers dans RAW
     results_raw = service.files().list(
         q=f"'{PHOTO_RAW_FOLDER_ID}' in parents and trashed = false",
         fields="files(id, name)"
     ).execute()
     raw_files = results_raw.get('files', [])
+    logger.info(f"Nombre de fichiers dans photos clean :{len(existing_clean_files)}")
+    logger.info(f"Nombre de fichiers dans photos raw :{len(raw_files)}")
 
-    wrong_ext_pic = 0
-    already_treated_pic = 0
-    new_rec_pic = 0
+    # wrong_ext_pic = 0
+    # already_treated_pic = 0
+    # new_rec_pic = 0
 
-    EXTENSIONS_IMAGES = (".heic", ".heif", ".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp", ".webp")
+    # EXTENSIONS_IMAGES = (".heic", ".heif", ".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp", ".webp")
 
-    for file_drive in raw_files:
-        file_name = file_drive['name']
-        file_id = file_drive['id']
+    # for file_drive in raw_files:
+    #     file_name = file_drive['name']
+    #     file_id = file_drive['id']
 
-        if not file_name.lower().endswith(EXTENSIONS_IMAGES):
-            logger.info(f"{file_name}: extension incompatible")
-            wrong_ext_pic += 1
-            continue
+    #     if not file_name.lower().endswith(EXTENSIONS_IMAGES):
+    #         logger.info(f"{file_name}: extension incompatible")
+    #         wrong_ext_pic += 1
+    #         continue
 
-        jpeg_name = file_name.rsplit(".", 1)[0] + ".jpg"
+    #     jpeg_name = file_name.rsplit(".", 1)[0] + ".jpg"
         
-        # Vérification si déjà traité
-        if jpeg_name in existing_clean_files:
-            already_treated_pic += 1
-            continue
+    #     # Vérification si déjà traité
+    #     if jpeg_name in existing_clean_files:
+    #         already_treated_pic += 1
+    #         continue
 
-        try:
-            # --- TÉLÉCHARGEMENT ---
-            request = service.files().get_media(fileId=file_id)
-            file_stream = io.BytesIO()
-            downloader = MediaIoBaseDownload(file_stream, request)
-            done = False
-            while not done:
-                _, done = downloader.next_chunk()
+    #     try:
+    #         # --- TÉLÉCHARGEMENT ---
+    #         request = service.files().get_media(fileId=file_id)
+    #         file_stream = io.BytesIO()
+    #         downloader = MediaIoBaseDownload(file_stream, request)
+    #         done = False
+    #         while not done:
+    #             _, done = downloader.next_chunk()
             
-            # --- CONVERSION EN MÉMOIRE ---
-            file_stream.seek(0)
-            img = Image.open(file_stream)
+    #         # --- CONVERSION EN MÉMOIRE ---
+    #         file_stream.seek(0)
+    #         img = Image.open(file_stream)
             
-            # Conversion RGB (nécessaire pour HEIC/PNG vers JPEG)
-            if img.mode in ("RGBA", "P", "CMYK"):
-                img = img.convert("RGB")
+    #         # Conversion RGB (nécessaire pour HEIC/PNG vers JPEG)
+    #         if img.mode in ("RGBA", "P", "CMYK"):
+    #             img = img.convert("RGB")
             
-            output_buffer = io.BytesIO()
-            img.save(output_buffer, format="JPEG", quality=95)
-            output_buffer.seek(0)
+    #         output_buffer = io.BytesIO()
+    #         img.save(output_buffer, format="JPEG", quality=95)
+    #         output_buffer.seek(0)
 
-            # --- UPLOAD VERS DRIVE ---
-            file_metadata = {
-                'name': jpeg_name,
-                'parents': [CLEANED_DATA_FOLDER_ID]
-            }
-            media = MediaIoBaseUpload(output_buffer, mimetype='image/jpeg')
-            service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    #         # --- UPLOAD VERS DRIVE ---
+    #         file_metadata = {
+    #             'name': jpeg_name,
+    #             'parents': [CLEANED_DATA_FOLDER_ID]
+    #         }
+    #         media = MediaIoBaseUpload(output_buffer, mimetype='image/jpeg')
+    #         service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-            logger.info(f"Converti et uploadé : {jpeg_name}")
-            new_rec_pic += 1
+    #         logger.info(f"Converti et uploadé : {jpeg_name}")
+    #         new_rec_pic += 1
 
-        except Exception as e:
-            logger.error(f"Erreur lors du traitement de {file_name} : {e}")
+    #     except Exception as e:
+    #         logger.error(f"Erreur lors du traitement de {file_name} : {e}")
 
-    logger.info(f"""Rapport final :
-        {new_rec_pic} nouvelles images enregistrées sur Drive,
-        {already_treated_pic} images ignorées car déjà présentes dans {CLEANED_DATA_FOLDER_NAME},
-        {wrong_ext_pic} fichiers ignorés (extension incompatible)""")
+    # logger.info(f"""Rapport final :
+    #     {new_rec_pic} nouvelles images enregistrées sur Drive,
+    #     {already_treated_pic} images ignorées car déjà présentes dans {CLEANED_DATA_FOLDER_NAME},
+    #     {wrong_ext_pic} fichiers ignorés (extension incompatible)""")
 
 
 ################################################################################################################################
@@ -251,15 +218,10 @@ def process_photos(service, parent_id):
 if __name__ == "__main__":
     try:
         service = get_drive_service()
-        res = get_all_existing_names(service, CLEANED_DATA_FOLDER_ID)
-        for name in res:
-            logger.info(f"Fichier : {name}")
-        # process_photos(service, ROOT_FOLDER_ID)
-        
-
+        existing_clean_files = get_all_existing_names(service, CLEANED_DATA_FOLDER_ID)
+        process_photos(service, existing_clean_files)
     except Exception as e:
         logger.error(f"Une erreur est survenue : {e}")
-
 
 # ------------------------------------------------ PHOTOS -----------------------------------------
 # register_heif_opener() # ajoute un décodeur HEIF pou PIL
