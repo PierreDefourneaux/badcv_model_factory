@@ -151,76 +151,77 @@ def process_photos(service, existing_clean_files, PHOTO_RAW_FOLDER_NAME):
             f"Le seuil bloquant de 800 fichiers dans photos raw sera bientôt atteint. "
             f"Il faut déplacer les fichiers dans le dossier 'archives'. "
             )
-    elif len(raw_files)>8:
+    elif len(raw_files)>800:
         logger.critical(
             f"INTERRUPTION DU SCRIPT : {len(raw_files)} fichiers trouvés. "
-            f"Le seuil maximal de 800 est dépassé. Nettoyage requis dans {PHOTO_RAW_FOLDER_NAME}."
+            f"Le seuil maximal de 800 est dépassé dans {PHOTO_RAW_FOLDER_NAME}. "
+            f"Il faut déplacer les fichiers dans le dossier 'archives'. "
             )
         sys.exit(1)
     else :
         logger.info(f"Nombre de fichiers dans photos raw :{len(raw_files)}")
 
-    # wrong_ext_pic = 0
-    # already_treated_pic = 0
-    # new_rec_pic = 0
+    wrong_ext_pic = 0
+    already_treated_pic = 0
+    new_rec_pic = 0
 
-    # EXTENSIONS_IMAGES = (".heic", ".heif", ".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp", ".webp")
+    EXTENSIONS_IMAGES = (".heic", ".heif", ".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp", ".webp")
 
-    # for file_drive in raw_files:
-    #     file_name = file_drive['name']
-    #     file_id = file_drive['id']
+    for file_drive in raw_files:
+        file_name = file_drive['name']
+        file_id = file_drive['id']
 
-    #     if not file_name.lower().endswith(EXTENSIONS_IMAGES):
-    #         logger.info(f"{file_name}: extension incompatible")
-    #         wrong_ext_pic += 1
-    #         continue
+        if not file_name.lower().endswith(EXTENSIONS_IMAGES):
+            logger.info(f"{file_name}: extension incompatible")
+            wrong_ext_pic += 1
+            continue
 
-    #     jpeg_name = file_name.rsplit(".", 1)[0] + ".jpg"
+        jpeg_name = file_name.rsplit(".", 1)[0] + ".jpg"
         
-    #     # Vérification si déjà traité
-    #     if jpeg_name in existing_clean_files:
-    #         already_treated_pic += 1
-    #         continue
+        # Vérification si déjà traité
+        if jpeg_name in existing_clean_files:
+            already_treated_pic += 1
+            continue
 
-    #     try:
-    #         # --- TÉLÉCHARGEMENT ---
-    #         request = service.files().get_media(fileId=file_id)
-    #         file_stream = io.BytesIO()
-    #         downloader = MediaIoBaseDownload(file_stream, request)
-    #         done = False
-    #         while not done:
-    #             _, done = downloader.next_chunk()
+        try:
+            # --- TÉLÉCHARGEMENT ---
+            request = service.files().get_media(fileId=file_id)
+            file_stream = io.BytesIO()
+            downloader = MediaIoBaseDownload(file_stream, request)
+            done = False
+            while not done:
+                _, done = downloader.next_chunk()
             
-    #         # --- CONVERSION EN MÉMOIRE ---
-    #         file_stream.seek(0)
-    #         img = Image.open(file_stream)
+            # --- CONVERSION EN MÉMOIRE ---
+            file_stream.seek(0)
+            img = Image.open(file_stream)
             
-    #         # Conversion RGB (nécessaire pour HEIC/PNG vers JPEG)
-    #         if img.mode in ("RGBA", "P", "CMYK"):
-    #             img = img.convert("RGB")
+            # Conversion RGB (nécessaire pour HEIC/PNG vers JPEG)
+            if img.mode in ("RGBA", "P", "CMYK"):
+                img = img.convert("RGB")
             
-    #         output_buffer = io.BytesIO()
-    #         img.save(output_buffer, format="JPEG", quality=95)
-    #         output_buffer.seek(0)
+            output_buffer = io.BytesIO()
+            img.save(output_buffer, format="JPEG", quality=95)
+            output_buffer.seek(0)
 
-    #         # --- UPLOAD VERS DRIVE ---
-    #         file_metadata = {
-    #             'name': jpeg_name,
-    #             'parents': [CLEANED_DATA_FOLDER_ID]
-    #         }
-    #         media = MediaIoBaseUpload(output_buffer, mimetype='image/jpeg')
-    #         service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+            # --- UPLOAD VERS DRIVE ---
+            file_metadata = {
+                'name': jpeg_name,
+                'parents': [CLEANED_DATA_FOLDER_ID]
+            }
+            media = MediaIoBaseUpload(output_buffer, mimetype='image/jpeg')
+            service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-    #         logger.info(f"Converti et uploadé : {jpeg_name}")
-    #         new_rec_pic += 1
+            logger.info(f"Converti et uploadé : {jpeg_name}")
+            new_rec_pic += 1
 
-    #     except Exception as e:
-    #         logger.error(f"Erreur lors du traitement de {file_name} : {e}")
+        except Exception as e:
+            logger.error(f"Erreur lors du traitement de {file_name} : {e}")
 
-    # logger.info(f"""Rapport final :
-    #     {new_rec_pic} nouvelles images enregistrées sur Drive,
-    #     {already_treated_pic} images ignorées car déjà présentes dans {CLEANED_DATA_FOLDER_NAME},
-    #     {wrong_ext_pic} fichiers ignorés (extension incompatible)""")
+    logger.info(f"""Rapport final :
+        {new_rec_pic} nouvelles images enregistrées sur Drive,
+        {already_treated_pic} images ignorées car déjà présentes dans {CLEANED_DATA_FOLDER_NAME},
+        {wrong_ext_pic} fichiers ignorés (extension incompatible)""")
 
 
 ################################################################################################################################
