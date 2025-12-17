@@ -81,10 +81,12 @@ def get_drive_service():
     """Authentification avec le Compte de Service (Local ou GitHub)."""
     try:
         # 1. Tentative de lecture du fichier local pour tests PC
-        if os.path.exists(SERVICE_ACCOUNT_FILE) and len(SERVICE_ACCOUNT_FILE)>1:
-            logger.info(f"Authentification via fichier local : {SERVICE_ACCOUNT_FILE}")
-            creds = service_account.Credentials.from_service_account_file(
-                SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        # if os.path.exists(SERVICE_ACCOUNT_FILE) and len(SERVICE_ACCOUNT_FILE)>1:
+        #     logger.info(f"Authentification via fichier local : {SERVICE_ACCOUNT_FILE}")
+        #     creds = service_account.Credentials.from_service_account_file(
+        #         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        if 1 == 2 :
+            logger.info("aaa")
         
         # 2. Lecture depuis les secrets GitHub
         else:
@@ -134,7 +136,6 @@ def list_subfolders(service, parent_id):
 if __name__ == "__main__":
     try:
         service = get_drive_service()
-        logger.info("Authentification réussie.")
 
         # 1. Trouver l'ID du dossier
         root_id = find_folder_id(service, ROOT_FOLDER_NAME)
