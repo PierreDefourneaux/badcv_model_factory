@@ -10,6 +10,9 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import json
 
+import io
+from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
+
 from dotenv import load_dotenv
 
 # ----------------------------------- IMPORT DES SECRETS GITHUB------------------------------------
@@ -19,11 +22,16 @@ MAIL_SENDER_ADRESS = os.getenv("MAIL_SENDER_ADRESS")
 MAIL_RECIEVER = os.getenv("MAIL_RECIEVER")
 SMTP_HOST = os.getenv("SMTP_HOST")
 SMTP_PORT = os.getenv("SMTP_PORT")
-ROOT_FOLDER_NAME = os.getenv("ROOT_FOLDER_NAME")
-VIDEO_RAW_FOLDER_NAME = os.getenv("VIDEO_RAW_FOLDER_NAME")
-PHOTO_RAW_FOLDER_NAME = os.getenv("PHOTO_RAW_FOLDER_NAME")
+# ROOT_FOLDER_NAME = os.getenv("ROOT_FOLDER_NAME")
+ROOT_FOLDER_ID = os.getenv("ROOT_FOLDER_ID")
+# VIDEO_RAW_FOLDER_NAME = os.getenv("VIDEO_RAW_FOLDER_NAME")
+# VIDEO_RAW_FOLDER_ID = os.getenv("VIDEO_RAW_FOLDER_ID")
+# PHOTO_RAW_FOLDER_NAME = os.getenv("PHOTO_RAW_FOLDER_NAME")
+PHOTO_RAW_FOLDER_ID = os.getenv("PHOTO_RAW_FOLDER_ID")
 CLEANED_DATA_FOLDER_NAME = os.getenv("CLEANED_DATA_FOLDER_NAME")
-TREATED_LIST_FOLDER = os.getenv("TREATED_LIST_FOLDER")
+CLEANED_DATA_FOLDER_ID = os.getenv("CLEANED_DATA_FOLDER_ID")
+# TREATED_LIST_FOLDER = os.getenv("TREATED_LIST_FOLDER")
+# TREATED_LIST_FOLDER_ID = os.getenv("TREATED_LIST_FOLDER_ID")
 GDRIVE_SERVICE_ACCOUNT_KEY = os.getenv("GDRIVE_SERVICE_ACCOUNT_KEY")
 SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE")
 SCOPES = [os.getenv("SCOPES")]
@@ -129,29 +137,125 @@ def list_subfolders(service, parent_id):
     results = service.files().list(q=query, fields="files(id, name)").execute()
     return results.get('files', [])
 
+
+################################################################################################################################
+################################################################################################################################
+################################################################################################################################
+def get_all_existing_names(service, folder_id):
+    """Récupère TOUS les noms de fichiers d'un dossier, peu importe le nombre en gérant la limite de 1000 de google drive."""
+    names = set()
+    page_token = None
+    
+    while True:
+        results = service.files().list(
+            q=f"'{folder_id}' in parents and trashed = false",
+            fields="nextPageToken, files(name)",
+            pageSize=1000,
+            pageToken=page_token
+        ).execute()
+        
+        for f in results.get('files', []):
+            names.add(f['name'])
+            
+        page_token = results.get('nextPageToken')
+        if not page_token:
+            break
+    logger.info(f"Nombre de fichiers : {len(names)}")       
+    return names
+
+def process_photos(service, parent_id):
+    # Lister les fichiers déjà présents dans CLEAN (pour éviter les doublons)
+    results_clean = service.files().list(
+        # syntaxe spécifique du langage de requête de l'API Google Drive
+        q=f"'{CLEANED_DATA_FOLDER_ID}' in parents and trashed = false",
+        fields="files(name)"
+    ).execute()
+    existing_clean_files = {f['name'] for f in results_clean.get('files', [])}
+
+    # Lister les fichiers dans RAW
+    results_raw = service.files().list(
+        q=f"'{PHOTO_RAW_FOLDER_ID}' in parents and trashed = false",
+        fields="files(id, name)"
+    ).execute()
+    raw_files = results_raw.get('files', [])
+
+    wrong_ext_pic = 0
+    already_treated_pic = 0
+    new_rec_pic = 0
+
+    EXTENSIONS_IMAGES = (".heic", ".heif", ".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp", ".webp")
+
+    for file_drive in raw_files:
+        file_name = file_drive['name']
+        file_id = file_drive['id']
+
+        if not file_name.lower().endswith(EXTENSIONS_IMAGES):
+            logger.info(f"{file_name}: extension incompatible")
+            wrong_ext_pic += 1
+            continue
+
+        jpeg_name = file_name.rsplit(".", 1)[0] + ".jpg"
+        
+        # Vérification si déjà traité
+        if jpeg_name in existing_clean_files:
+            already_treated_pic += 1
+            continue
+
+        try:
+            # --- TÉLÉCHARGEMENT ---
+            request = service.files().get_media(fileId=file_id)
+            file_stream = io.BytesIO()
+            downloader = MediaIoBaseDownload(file_stream, request)
+            done = False
+            while not done:
+                _, done = downloader.next_chunk()
+            
+            # --- CONVERSION EN MÉMOIRE ---
+            file_stream.seek(0)
+            img = Image.open(file_stream)
+            
+            # Conversion RGB (nécessaire pour HEIC/PNG vers JPEG)
+            if img.mode in ("RGBA", "P", "CMYK"):
+                img = img.convert("RGB")
+            
+            output_buffer = io.BytesIO()
+            img.save(output_buffer, format="JPEG", quality=95)
+            output_buffer.seek(0)
+
+            # --- UPLOAD VERS DRIVE ---
+            file_metadata = {
+                'name': jpeg_name,
+                'parents': [CLEANED_DATA_FOLDER_ID]
+            }
+            media = MediaIoBaseUpload(output_buffer, mimetype='image/jpeg')
+            service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+
+            logger.info(f"Converti et uploadé : {jpeg_name}")
+            new_rec_pic += 1
+
+        except Exception as e:
+            logger.error(f"Erreur lors du traitement de {file_name} : {e}")
+
+    logger.info(f"""Rapport final :
+        {new_rec_pic} nouvelles images enregistrées sur Drive,
+        {already_treated_pic} images ignorées car déjà présentes dans {CLEANED_DATA_FOLDER_NAME},
+        {wrong_ext_pic} fichiers ignorés (extension incompatible)""")
+
+
+################################################################################################################################
+################################################################################################################################
+################################################################################################################################
+
 # ----------------------------------- EXECUTION ----------------------------------------
 
 if __name__ == "__main__":
     try:
         service = get_drive_service()
-
-        # 1. Trouver l'ID du dossier
-        root_id = find_folder_id(service, ROOT_FOLDER_NAME)
+        res = get_all_existing_names(service, CLEANED_DATA_FOLDER_ID)
+        for name in res:
+            logger.info(f"Fichier : {name}")
+        # process_photos(service, ROOT_FOLDER_ID)
         
-        if not root_id:
-            logger.error(f"Impossible de trouver le dossier '{ROOT_FOLDER_NAME}'.")
-        else:
-            logger.info(f"Dossier racine trouvé (ID: {root_id})")
-
-            # 2. Lister les dossiers enfants
-            subfolders = list_subfolders(service, root_id)
-            
-            if not subfolders:
-                logger.info("Aucun sous-dossier trouvé.")
-            else:
-                logger.info(f"Trouvé {len(subfolders)} dossier(s) dans '{ROOT_FOLDER_NAME}':")
-                for folder in subfolders:
-                    logger.info(f" - Nom: {folder['name']} (ID: {folder['id']})")
 
     except Exception as e:
         logger.error(f"Une erreur est survenue : {e}")
@@ -163,17 +267,17 @@ if __name__ == "__main__":
 # wrong_ext_pic =0
 # already_treated_pic = 0
 # new_rec_pic =0
-# for file in os.listdir(raw_pictures_folder):
+# for file in os.listdir(PHOTO_RAW_FOLDER_NAME):
 #     if not file.lower().endswith(EXTENSIONS_IMAGES):
 #         logger.info(f"{file}: extension incompatible")
 #         wrong_ext_pic +=1
 #         continue
 #     jpeg_name = file.rsplit(".", 1)[0] + ".jpg" # le 1 dans rsplit c'est 1 coupure (part toujours de la droite)
-#     jpeg_path = os.path.join(destination_folder, jpeg_name)
+#     jpeg_path = os.path.join(CLEANED_DATA_FOLDER_NAME, jpeg_name)
 #     if os.path.exists(jpeg_path):
 #         already_treated_pic += 1
 #         continue
-#     img = Image.open(os.path.join(raw_pictures_folder, file))
+#     img = Image.open(os.path.join(PHOTO_RAW_FOLDER_NAME, file))
 #     img.save(jpeg_path, format="JPEG", quality=95)
 #     new_rec_pic += 1
 # logger.info(f"""Depuis le dossier photos_terrains_raw :

@@ -40,10 +40,15 @@ jobs:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           ROOT_FOLDER_NAME: ${{ secrets.ROOT_FOLDER_NAME }}
+          ROOT_FOLDER_ID: ${{ secrets.ROOT_FOLDER_ID }}
           VIDEO_RAW_FOLDER_NAME: ${{ secrets.VIDEO_RAW_FOLDER_NAME }}
+          VIDEO_RAW_FOLDER_ID: ${{ secrets.VIDEO_RAW_FOLDER_ID }}
           PHOTO_RAW_FOLDER_NAME: ${{ secrets.PHOTO_RAW_FOLDER_NAME }}
+          PHOTO_RAW_FOLDER_ID: ${{ secrets.PHOTO_RAW_FOLDER_ID }}
           CLEANED_DATA_FOLDER_NAME: ${{ secrets.CLEANED_DATA_FOLDER_NAME }}
+          CLEANED_DATA_FOLDER_ID: ${{ secrets.CLEANED_DATA_FOLDER_ID }}
           TREATED_LIST_FOLDER: ${{ secrets.TREATED_LIST_FOLDER }}
+          TREATED_LIST_FOLDER_ID: ${{ secrets.TREATED_LIST_FOLDER }}
           GDRIVE_SERVICE_ACCOUNT_KEY: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_KEY }}
           SCOPES: ${{ secrets.SCOPES }}
           
