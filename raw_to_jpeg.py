@@ -145,7 +145,7 @@ def process_photos(service, existing_clean_files, PHOTO_RAW_FOLDER_NAME):
     raw_files = results_raw.get('files', [])
 
     logger.info(f"Nombre de fichiers dans photos clean :{len(existing_clean_files)}")
-    if len(raw_files)>5:
+    if len(raw_files)>500:
         logger.critical(
             f"Il y a {len(raw_files)} fichiers dans {PHOTO_RAW_FOLDER_NAME}. "
             f"Le seuil bloquant de 800 fichiers dans photos raw sera bientôt atteint. "
