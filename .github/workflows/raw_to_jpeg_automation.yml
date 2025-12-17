@@ -46,8 +46,10 @@ jobs:
           TREATED_LIST_FOLDER: ${{ secrets.TREATED_LIST_FOLDER }}
           GDRIVE_SERVICE_ACCOUNT_KEY: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_KEY }}
           SCOPES: ${{ secrets.SCOPES }}
-
+          
         run: |
+          echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT_KEY }}' > credentials.json
+          export GDRIVE_SERVICE_ACCOUNT_KEY="credentials.json"
           python raw_to_jpeg.py
       - name: Persist log file
         uses: actions/upload-artifact@v4
