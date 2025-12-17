@@ -6,6 +6,10 @@ import logging
 from logging.handlers import SMTPHandler
 import smtplib
 from email.message import EmailMessage
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+import json
+
 from dotenv import load_dotenv
 
 # ----------------------------------- IMPORT DES SECRETS GITHUB------------------------------------
@@ -15,6 +19,14 @@ MAIL_SENDER_ADRESS = os.getenv("MAIL_SENDER_ADRESS")
 MAIL_RECIEVER = os.getenv("MAIL_RECIEVER")
 SMTP_HOST = os.getenv("SMTP_HOST")
 SMTP_PORT = os.getenv("SMTP_PORT")
+ROOT_FOLDER_NAME = os.getenv("ROOT_FOLDER_NAME")
+VIDEO_RAW_FOLDER_NAME = os.getenv("VIDEO_RAW_FOLDER_NAME")
+PHOTO_RAW_FOLDER_NAME = os.getenv("PHOTO_RAW_FOLDER_NAME")
+CLEANED_DATA_FOLDER_NAME = os.getenv("CLEANED_DATA_FOLDER_NAME")
+TREATED_LIST_FOLDER = os.getenv("TREATED_LIST_FOLDER")
+GDRIVE_SERVICE_ACCOUNT_KEY = os.getenv("GDRIVE_SERVICE_ACCOUNT_KEY")
+SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE")
+SCOPES = [os.getenv("SCOPES")]
 
 # ------------------------------------------------ CONFIG LOGGING ---------------------------------
 logger = logging.getLogger(__name__)
@@ -59,6 +71,92 @@ def envoyer_un_mail_reporting(nombre_images, MAIL_RECIEVER):
             smtp.send_message(msg)
     except Exception as e:
         logger.critical(f"Erreur lors de l'envoi de mail : {e}")
+
+# ------------------------------------------- CONSTRUIRE L'ACCES A GOOGLE DRIVE -------------------
+
+
+# ----------------------------------- AUTHENTIFICATION ---------------------------------
+
+def get_drive_service():
+    """Authentification avec le Compte de Service (Local ou GitHub)."""
+    try:
+        # 1. Tentative de lecture du fichier local pour tests PC
+        if os.path.exists(SERVICE_ACCOUNT_FILE):
+            logger.info(f"Authentification via fichier local : {SERVICE_ACCOUNT_FILE}")
+            creds = service_account.Credentials.from_service_account_file(
+                SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        
+        # 2. Lecture depuis les secrets GitHub
+        else:
+            logger.info("Authentification via Secret GitHub (GDRIVE_SERVICE_ACCOUNT_KEY)")
+            json_secret = os.getenv("GDRIVE_SERVICE_ACCOUNT_KEY")
+            
+            if not json_secret:
+                logger.critical("Le Secret 'GDRIVE_SERVICE_ACCOUNT_KEY' est vide ou introuvable.")
+                return None
+
+            try:
+                service_account_info = json.loads(json_secret)
+            except json.JSONDecodeError as e:
+                logger.critical(f"Le format du Secret JSON est invalide : {e}")
+                return None
+
+            creds = service_account.Credentials.from_service_account_info(
+                service_account_info, scopes=SCOPES)
+        
+        # 3. Création du service
+        service = build('drive', 'v3', credentials=creds)
+        return service
+
+    except Exception as e:
+        logger.error(f"Erreur inattendue lors de l'authentification Drive : {e}")
+        return None
+
+# ----------------------------------- FONCTIONS DRIVE ----------------------------------
+
+def find_folder_id(service, folder_name):
+    """Trouve l'ID d'un dossier par son nom."""
+    query = f"name = '{folder_name}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+    results = service.files().list(q=query, fields="files(id, name)").execute()
+    items = results.get('files', [])
+    if not items:
+        return None
+    return items[0]['id']
+
+def list_subfolders(service, parent_id):
+    """Liste les dossiers contenus dans le dossier parent."""
+    query = f"'{parent_id}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
+    results = service.files().list(q=query, fields="files(id, name)").execute()
+    return results.get('files', [])
+
+# ----------------------------------- EXECUTION ----------------------------------------
+
+if __name__ == "__main__":
+    try:
+        service = get_drive_service()
+        logger.info("Authentification réussie.")
+
+        # 1. Trouver l'ID du dossier
+        root_id = find_folder_id(service, ROOT_FOLDER_NAME)
+        
+        if not root_id:
+            logger.error(f"Impossible de trouver le dossier '{ROOT_FOLDER_NAME}'.")
+        else:
+            logger.info(f"Dossier racine trouvé (ID: {root_id})")
+
+            # 2. Lister les dossiers enfants
+            subfolders = list_subfolders(service, root_id)
+            
+            if not subfolders:
+                logger.info("Aucun sous-dossier trouvé.")
+            else:
+                logger.info(f"Trouvé {len(subfolders)} dossier(s) dans '{ROOT_FOLDER_NAME}':")
+                for folder in subfolders:
+                    logger.info(f" - Nom: {folder['name']} (ID: {folder['id']})")
+
+    except Exception as e:
+        logger.error(f"Une erreur est survenue : {e}")
+
 
 # ------------------------------------------------ PHOTOS -----------------------------------------
 # register_heif_opener() # ajoute un décodeur HEIF pou PIL
@@ -149,5 +247,5 @@ def envoyer_un_mail_reporting(nombre_images, MAIL_RECIEVER):
 #     logger.warning(f"{not_jpeg} fichier(s) ne sont pas des jpg dans photos_terrain_clean")
 # nombre_images = len(os.listdir(destination_folder))
 # logger.info(f"AU TOTAL : {nombre_images} images dans photos_terrain_clean\n\n")
-nombre_images = 5
-envoyer_un_mail_reporting(nombre_images, MAIL_RECIEVER)
+# nombre_images = 5
+# envoyer_un_mail_reporting(nombre_images, MAIL_RECIEVER)
