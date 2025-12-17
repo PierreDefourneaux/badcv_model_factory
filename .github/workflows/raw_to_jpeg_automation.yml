@@ -2,7 +2,7 @@ name: Automatisaton raw to jpeg
 
 on:
   schedule:
-    - cron: "45 */8 * * *"
+    - cron: "*/15 * * * *"
   workflow_dispatch: # garder la possibilité de la déclencher manuellement dans github
 
 jobs:

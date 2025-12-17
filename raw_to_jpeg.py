@@ -81,12 +81,10 @@ def get_drive_service():
     """Authentification avec le Compte de Service (Local ou GitHub)."""
     try:
         # 1. Tentative de lecture du fichier local pour tests PC
-        # if os.path.exists(SERVICE_ACCOUNT_FILE) and len(SERVICE_ACCOUNT_FILE)>1:
-        #     logger.info(f"Authentification via fichier local : {SERVICE_ACCOUNT_FILE}")
-        #     creds = service_account.Credentials.from_service_account_file(
-        #         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-        if 1 == 2 :
-            logger.info("aaa")
+        if SERVICE_ACCOUNT_FILE:
+            logger.info(f"Authentification via fichier local : {SERVICE_ACCOUNT_FILE}")
+            creds = service_account.Credentials.from_service_account_file(
+                SERVICE_ACCOUNT_FILE, scopes=SCOPES)
         
         # 2. Lecture depuis les secrets GitHub
         else:
