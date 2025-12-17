@@ -160,7 +160,8 @@ def process_photos(service, existing_clean_files, PHOTO_RAW_FOLDER_NAME):
         sys.exit(1)
     else :
         logger.info(f"Nombre de fichiers dans photos raw :{len(raw_files)}")
-
+        
+    register_heif_opener()
     wrong_ext_pic = 0
     already_treated_pic = 0
     new_rec_pic = 0
