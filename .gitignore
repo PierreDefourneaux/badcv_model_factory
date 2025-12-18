@@ -5,6 +5,7 @@ build/
 dist/
 wheels/
 *.egg-info
+.pytest_cache
 
 # Virtual environments
 .venv
@@ -12,4 +13,5 @@ wheels/
 # My Files
 dev.ipynb
 .env
-drive-api-script-badia-46ba0ef009c6.json
+
+
