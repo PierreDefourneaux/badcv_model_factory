@@ -24,10 +24,13 @@ jobs:
       - name: Récupération du code
         uses: actions/checkout@v4
 
-      - name: Installer Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.12.12'
+        # Optionnel : Forcer une version spécifique de python
+          python-version: "3.12.12"
+        # Active le cache pour accélérer les futurs runs
+          enable-cache: true
 
       - name: Installer dépendances
         run: |
