@@ -4,7 +4,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
+# env global :
 # env:
 #   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 #   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -58,19 +58,9 @@ jobs:
           echo "=== RAM ==="; free -h
       - name: Lancer pytest
         run: uv run pytest -vv ./tests_unitaires/tests_unitaires.py
-
-    #   - name: Nettoyer l’espace disque
-    #     if: always()
-    #     run: |
-    #       rm -rf ~/.cache/pip
-    #       df -h
-
-    #   - name: Log runner resources
-    #     run: |
-    #       echo "=== Disque ==="; df -h
-    #       echo "=== RAM ==="; free -h
-    #       echo "=== Docker ==="; docker system df
-    # runs-on: ubuntu-latest
+  badia_docker_compose_up:
+  
+  runs-on: ubuntu-latest
     # steps:
     #   - name: Repo checkout
 #         uses: actions/checkout@v3

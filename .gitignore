@@ -13,5 +13,8 @@ wheels/
 # My Files
 dev.ipynb
 .env
+train_model.py
 
-
+# My Folders
+data_keras
+yolo_data

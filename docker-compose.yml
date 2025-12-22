@@ -1,0 +1,8 @@
+services:
+  backend:
+    build:
+      context: ./flask_ctn_dir
+      dockerfile: Dockerfile.flask
+    container_name: FLASK_CONTAINER
+    ports:
+      - "5000:5000"

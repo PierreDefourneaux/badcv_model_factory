@@ -4,7 +4,7 @@ Module de tests unitaires.
 
 import sys
 
-def test_python_version():
+def test_python_version_3_12_12():
     """
     Vérifie que la version de l'interpréteur Python est exactement la 3.12.12.
     """
