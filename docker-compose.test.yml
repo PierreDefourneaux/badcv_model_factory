@@ -11,6 +11,7 @@ services:
       - "8000:8000"
     environment:
       - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+      - PYTHONDONTWRITEBYTECODE=1
     healthcheck:
       test: ["CMD", "test", "-f", "/tmp/mcp_ready.txt"]
       interval: 5s
