@@ -58,9 +58,10 @@ jobs:
           echo "=== RAM ==="; free -h
       - name: Lancer pytest
         run: uv run pytest -vv ./tests_unitaires/tests_unitaires.py
-  badia_docker_compose_up:
+ 
+  # badia_docker_compose_up:
   
-  runs-on: ubuntu-latest
+  # runs-on: ubuntu-latest
     # steps:
     #   - name: Repo checkout
 #         uses: actions/checkout@v3

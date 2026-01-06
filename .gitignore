@@ -9,12 +9,13 @@ wheels/
 
 # Virtual environments
 .venv
-
+**/.venv
 # My Files
 dev.ipynb
 .env
 train_model.py
 
 # My Folders
-data_keras
-yolo_data
+data_keras/
+yolo_data/
+datas/

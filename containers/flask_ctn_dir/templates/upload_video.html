@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badminton Vision - Upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header>
+        <h2>🏸 Badminton Vision AI</h2>
+    </header>
+
+    <div class="upload-wrapper">
+        <div class="upload-card">
+            <h1>Analyser un Match</h1>
+            
+            <form id="upload-form">
+                <div class="drop-zone" id="drop-zone">
+                    <span class="icon-upload">☁️</span>
+                    <p>Glissez votre vidéo ici<br>ou cliquez pour parcourir</p>
+                    <input type="file" name="video" id="file-input" accept="video/*" hidden>
+                </div>
+
+                <video id="video-preview" controls></video>
+
+                <button type="submit" class="btn-analyze" id="btn-submit">Lancer l'analyse IA</button>
+            </form>
+
+            <div id="status-message"></div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const videoPreview = document.getElementById('video-preview');
+        const btnSubmit = document.getElementById('btn-submit');
+        const statusMsg = document.getElementById('status-message');
+        const uploadForm = document.getElementById('upload-form');
+
+        // --- GESTION DU DRAG & DROP ---
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFile(fileInput.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) {
+                handleFile(fileInput.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('video/')) {
+                statusMsg.textContent = "❌ Le fichier doit être une vidéo.";
+                statusMsg.style.color = "#c0392b";
+                return;
+            }
+
+            const url = URL.createObjectURL(file);
+            videoPreview.src = url;
+            videoPreview.style.display = 'block';
+            btnSubmit.style.display = 'block';
+            
+            statusMsg.textContent = `✅ Vidéo prête : ${file.name}`;
+            statusMsg.style.color = "#27ae60";
+        }
+
+        // --- GESTION DE L'ENVOI (UPLOAD) ---
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<div class="loader"></div> Traitement en cours...';
+            statusMsg.textContent = "🚀 Upload de la vidéo vers le serveur...";
+            statusMsg.style.color = "#333";
+
+            const formData = new FormData();
+            formData.append('video', file);
+
+            try {
+                const response = await fetch('/api/upload_video', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    statusMsg.innerHTML = "🎉 Analyse terminée ! Résultats disponibles.";
+                    statusMsg.style.color = "#27ae60";
+                    btnSubmit.innerHTML = "Analyser une autre vidéo";
+                } else {
+                    statusMsg.textContent = "❌ Erreur: " + (result.error || "Problème serveur");
+                    statusMsg.style.color = "#c0392b";
+                    btnSubmit.innerHTML = "Lancer l'analyse IA";
+                }
+
+            } catch (error) {
+                console.error(error);
+                statusMsg.textContent = "❌ Erreur de connexion.";
+                statusMsg.style.color = "#c0392b";
+                btnSubmit.innerHTML = "Lancer l'analyse IA";
+            } finally {
+                btnSubmit.disabled = false;
+                if (btnSubmit.innerHTML.includes('Traitement')) {
+                     btnSubmit.textContent = "Lancer l'analyse IA";
+                }
+            }
+        });
+    </script>
+</body>
+</html>

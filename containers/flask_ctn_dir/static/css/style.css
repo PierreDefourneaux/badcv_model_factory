@@ -1,0 +1,185 @@
+/* =========================================
+   STYLES GLOBAUX & EXISTANTS
+   ========================================= */
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #27ae60; /* Vert Badminton */
+    --accent-hover: #219150;
+    --bg-color: #f0f2f5;
+    --text-color: #333;
+    --border-color: #ddd;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif; /* Un peu plus moderne */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+header {
+    background: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.box {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid var(--border-color);
+}
+
+.box-header {
+    background: #eee;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.content {
+    flex: 1;
+    padding: 15px;
+}
+
+video {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block; /* Évite les espaces fantômes sous la vidéo */
+}
+
+#chat-window {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #fafafa;
+}
+
+/* =========================================
+   NOUVEAUX STYLES : PAGE D'UPLOAD
+   ========================================= */
+
+/* Un wrapper pour centrer la carte d'upload verticalement et horizontalement */
+.upload-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* Prend tout l'espace restant sous le header */
+    padding: 20px;
+}
+
+.upload-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Ombre plus douce */
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.upload-card h1 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    margin-top: 0;
+}
+
+/* Zone de Drag & Drop */
+.drop-zone {
+    border: 2px dashed #bdc3c7;
+    border-radius: 8px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--accent-color);
+    background-color: rgba(39, 174, 96, 0.05);
+}
+
+.drop-zone p {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 1.1em;
+}
+
+.icon-upload {
+    font-size: 3rem;
+    color: #bdc3c7;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Aperçu vidéo spécifique upload (caché par défaut) */
+#video-preview {
+    margin-top: 1rem;
+    display: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Boutons */
+.btn-analyze {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    width: 100%;
+    transition: background 0.2s;
+    display: none; /* Caché tant qu'il n'y a pas de vidéo */
+}
+
+.btn-analyze:hover {
+    background-color: var(--accent-hover);
+}
+
+.btn-analyze:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* Message de statut */
+#status-message {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    min-height: 20px;
+}
+
+/* Animation Loader */
+.loader {
+    border: 3px solid rgba(255,255,255,0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
