@@ -26,6 +26,8 @@ jobs:
 
   badia_docker_tests:
     runs-on: self-hosted
+    env:
+      MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
     steps:
       - name: Récupération du code
         uses: actions/checkout@v4
@@ -34,8 +36,6 @@ jobs:
         run: docker compose -f docker-compose.test.yml down -v --remove-orphans || true
 
       - name: Build and Run Tests
-        env:
-            MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
         run: |
           docker compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from test_container_mcp_server
 
