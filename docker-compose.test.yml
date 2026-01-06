@@ -18,23 +18,3 @@ services:
       retries: 5
       start_period: 5s
     command: uv run pytest /app/tests_unitaires/test_mcp_logic.py
-
-
-  container_flask:
-    build:
-      context: ./containers/flask_ctn_dir
-      dockerfile: Dockerfile.flask
-    depends_on:
-      container_mcp_server:
-        condition: service_healthy
-    volumes:
-      # Pour le développement Flask (Hot Reload) : tout le dossier courant va dans /app. A supprimer quand le projet sera en prod
-      - ./containers/flask_ctn_dir:/app
-      # Pour les magnifiques logs json rcp du client mcp :
-      - ./logs/mcp_client:/app/logs_ctn_flask
-    container_name: FLASK_AND_MCP_CLIENT_CONTAINER
-    ports:
-      - "5000:5000"
-    environment:
-      - FLASK_DEBUG=1
-      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
