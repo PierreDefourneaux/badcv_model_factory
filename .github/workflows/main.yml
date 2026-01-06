@@ -35,8 +35,8 @@ jobs:
 
       - name: Build and Run Tests
         run: |
-          docker compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from app-test
+          docker compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from test_container_mcp_server
 
       - name: Cleanup Final
-        if: always() # S'exécute même si les tests plantent
+        if: always()
         run: docker compose -f docker-compose.test.yml down
