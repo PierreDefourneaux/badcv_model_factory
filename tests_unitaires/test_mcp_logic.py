@@ -1,5 +1,5 @@
 """
-Module de tests unitaires.
+Module de tests unitaires pour le conteneur mcp server.
 """
 
 import sys
