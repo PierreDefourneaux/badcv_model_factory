@@ -24,7 +24,7 @@ else:
     masked_key = f"{MISTRAL_API_KEY[:4]}...{MISTRAL_API_KEY[-4:]}"
     logger.info(f"MISTRAL_API_KEY chargée avec succès : {masked_key}")
 
-DATA_DIR_PATH = os.getenv("DATA_DIR", "/app/badia_files")
+DATA_DIR_PATH = os.getenv("DATA_DIR", "/app/badia_server_files")
 DATA_DIR = Path(DATA_DIR_PATH)
 
 if not DATA_DIR.exists():

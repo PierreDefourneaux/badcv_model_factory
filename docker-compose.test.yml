@@ -4,7 +4,7 @@ services:
       context: ./containers/mcp_server_ctn_dir
       dockerfile: Dockerfile.mcp_server
     volumes:
-      - ./datas:/app/badia_files
+      - ./datas_server:/app/badia_server_files
       - ./tests_unitaires:/app/tests_unitaires
     container_name: MCP_SERVER_CONTAINER_TEST
     ports:

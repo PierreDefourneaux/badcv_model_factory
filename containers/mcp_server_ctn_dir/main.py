@@ -8,7 +8,7 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 from config import logger, DATA_DIR, PORT_MCP
 from tools import register_tools
-from resources import register_resources, list_available_resources
+from resources import register_resources
 # from prompts import register_prompts
 
 HEALTHCHECK_FILE = Path("/tmp/mcp_ready.txt")
@@ -60,16 +60,16 @@ def display_server_info():
     print(f"Port: {PORT_MCP}")
     print(f"Dossier DATA: {DATA_DIR}")
     
-    # Afficher les ressources disponibles
-    resources = list_available_resources()
-    print(f"\n📚 Documents disponibles ({len(resources)}):")
-    if resources:
-        for res in resources:
-            print(f"  • {res['name']}")
-            print(f"    URI: {res['uri']}")
-            print(f"    Taille: {res['size']} octets")
-    else:
-        print("  Aucun document trouvé")
+    # # Afficher les ressources disponibles
+    # resources = list_available_resources()
+    # print(f"\n📚 Documents disponibles ({len(resources)}):")
+    # if resources:
+    #     for res in resources:
+    #         print(f"  • {res['name']}")
+    #         print(f"    URI: {res['uri']}")
+    #         print(f"    Taille: {res['size']} octets")
+    # else:
+    #     print("  Aucun document trouvé")
     
     print("\n" + "=" * 70)
     print("✅ Serveur prêt à recevoir des connexions")

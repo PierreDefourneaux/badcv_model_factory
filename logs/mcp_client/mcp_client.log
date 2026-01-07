@@ -1,4 +1,4 @@
-20:11:53 - INFO - Requête client MCP (initialize): {
+11:55:54 - INFO - Requête client MCP (initialize): {
   "jsonrpc": "2.0",
   "method": "initialize",
   "params": {
@@ -11,7 +11,7 @@
   },
   "id": 1
 }
-20:11:53 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
+11:55:54 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
@@ -35,13 +35,13 @@
     }
   }
 }
-20:11:53 - INFO - Requête client MCP (tools/list): {
+11:55:54 - INFO - Requête client MCP (tools/list): {
   "jsonrpc": "2.0",
   "method": "tools/list",
   "params": {},
   "id": 1
 }
-20:11:53 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
+11:55:54 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
@@ -72,25 +72,132 @@
     ]
   }
 }
-20:11:53 - INFO - Requête client MCP (resources/list): {
+11:55:54 - INFO - Requête client MCP (resources/list): {
   "jsonrpc": "2.0",
   "method": "resources/list",
   "params": {},
   "id": 1
 }
-20:11:53 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
+11:55:54 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
-    "resources": []
+    "resources": [
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/tactique_mixte.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/prevention_des_blessures.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/tactique_double.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_service_revers.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_double_homme.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_amorti_fond_de_court.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_contre_amorti.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_degage_defensif.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_sercice_coup_droit.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_simple.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_mixte.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_smash.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_degage_offensif.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_double_dame.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/tactique_simple.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/preparation_physique.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_reverse_slice.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      }
+    ]
   }
 }
-20:11:53 - INFO - 📢 REQ Mistral API: {
+11:55:54 - INFO - 📢 REQ Mistral API: {
   "model": "mistral-small-latest",
   "messages": [
     {
+      "role": "system",
+      "content": "Tu es Bad'IA, un coach expert en badminton (Technique, Tactique, Stratégie).\nTon ton est encourageant, précis et sportif.\nSi une action nécessite une confirmation de l'utilisateur (comme lancer une analyse vidéo lourde), demande-lui confirmation avant d'utiliser l'outil.\n\n📚 Fiches techniques disponibles (Ressources MCP) :\n- read_document (URI: doc://badminton/fiches/tactique_mixte.txt) : \n- read_document (URI: doc://badminton/fiches/prevention_des_blessures.txt) : \n- read_document (URI: doc://badminton/fiches/tactique_double.txt) : \n- read_document (URI: doc://badminton/fiches/technique_service_revers.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_double_homme.txt) : \n- read_document (URI: doc://badminton/fiches/technique_amorti_fond_de_court.txt) : \n- read_document (URI: doc://badminton/fiches/technique_contre_amorti.txt) : \n- read_document (URI: doc://badminton/fiches/technique_degage_defensif.txt) : \n- read_document (URI: doc://badminton/fiches/technique_sercice_coup_droit.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_simple.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_mixte.txt) : \n- read_document (URI: doc://badminton/fiches/technique_smash.txt) : \n- read_document (URI: doc://badminton/fiches/technique_degage_offensif.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_double_dame.txt) : \n- read_document (URI: doc://badminton/fiches/tactique_simple.txt) : \n- read_document (URI: doc://badminton/fiches/preparation_physique.txt) : \n- read_document (URI: doc://badminton/fiches/technique_reverse_slice.txt) : \n\nSi l'utilisateur pose une question théorique couverte par une fiche, utilise l'outil 'read_mcp_resource' avec l'URI correspondante."
+    },
+    {
       "role": "user",
-      "content": "Salut comment ca va ?"
+      "content": "Salut"
     }
   ],
   "temperature": 0.3,
@@ -106,12 +213,31 @@
           "type": "object"
         }
       }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "read_mcp_resource",
+        "description": "Lit le contenu complet d'une fiche technique ou ressource à partir de son URI. Utilise ceci impérativement quand tu as besoin de consulter une fiche listée dans le contexte.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "L'URI exacte de la ressource (ex: doc://badminton/fiches/smash.txt)"
+            }
+          },
+          "required": [
+            "uri"
+          ]
+        }
+      }
     }
   ],
   "tool_choice": "auto"
 }
-20:11:53 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"30108d8c1899441889799ea2880e1b6a","created":1767553912,"model":"mistral-small-latest","usage":{"prompt_tokens":118,"total_tokens":135,"completion_tokens":17},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Salut ! Je vais bien, merci. Et toi, comment ça va ?"}}]}
-20:17:56 - INFO - Requête client MCP (initialize): {
+11:55:55 - INFO - 📣 RESP Mistral API: OK (402 bytes)
+12:04:30 - INFO - Requête client MCP (initialize): {
   "jsonrpc": "2.0",
   "method": "initialize",
   "params": {
@@ -124,7 +250,7 @@
   },
   "id": 1
 }
-20:17:56 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
+12:04:30 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
@@ -148,13 +274,13 @@
     }
   }
 }
-20:17:56 - INFO - Requête client MCP (tools/list): {
+12:04:30 - INFO - Requête client MCP (tools/list): {
   "jsonrpc": "2.0",
   "method": "tools/list",
   "params": {},
   "id": 1
 }
-20:17:56 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
+12:04:30 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
@@ -185,25 +311,132 @@
     ]
   }
 }
-20:17:56 - INFO - Requête client MCP (resources/list): {
+12:04:30 - INFO - Requête client MCP (resources/list): {
   "jsonrpc": "2.0",
   "method": "resources/list",
   "params": {},
   "id": 1
 }
-20:17:56 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
+12:04:30 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
-    "resources": []
+    "resources": [
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/tactique_mixte.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/prevention_des_blessures.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/tactique_double.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_service_revers.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_double_homme.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_amorti_fond_de_court.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_contre_amorti.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_degage_defensif.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_sercice_coup_droit.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_simple.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_mixte.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_smash.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_degage_offensif.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_double_dame.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/tactique_simple.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/preparation_physique.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_reverse_slice.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      }
+    ]
   }
 }
-20:17:56 - INFO - 📢 REQ Mistral API: {
+12:04:30 - INFO - 📢 REQ Mistral API: {
   "model": "mistral-small-latest",
   "messages": [
     {
+      "role": "system",
+      "content": "Tu es Bad'IA, un coach expert en badminton (Technique, Tactique, Stratégie).\nTon ton est encourageant, précis et sportif.\nSi une action nécessite une confirmation de l'utilisateur (comme lancer une analyse vidéo lourde), demande-lui confirmation avant d'utiliser l'outil.\n\n📚 Fiches techniques disponibles (Ressources MCP) :\n- read_document (URI: doc://badminton/fiches/tactique_mixte.txt) : \n- read_document (URI: doc://badminton/fiches/prevention_des_blessures.txt) : \n- read_document (URI: doc://badminton/fiches/tactique_double.txt) : \n- read_document (URI: doc://badminton/fiches/technique_service_revers.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_double_homme.txt) : \n- read_document (URI: doc://badminton/fiches/technique_amorti_fond_de_court.txt) : \n- read_document (URI: doc://badminton/fiches/technique_contre_amorti.txt) : \n- read_document (URI: doc://badminton/fiches/technique_degage_defensif.txt) : \n- read_document (URI: doc://badminton/fiches/technique_sercice_coup_droit.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_simple.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_mixte.txt) : \n- read_document (URI: doc://badminton/fiches/technique_smash.txt) : \n- read_document (URI: doc://badminton/fiches/technique_degage_offensif.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_double_dame.txt) : \n- read_document (URI: doc://badminton/fiches/tactique_simple.txt) : \n- read_document (URI: doc://badminton/fiches/preparation_physique.txt) : \n- read_document (URI: doc://badminton/fiches/technique_reverse_slice.txt) : \n\nSi l'utilisateur pose une question théorique couverte par une fiche, utilise l'outil 'read_mcp_resource' avec l'URI correspondante."
+    },
+    {
       "role": "user",
-      "content": "Je veux analyser une vidéo de bad"
+      "content": "Salut"
     }
   ],
   "temperature": 0.3,
@@ -219,41 +452,31 @@
           "type": "object"
         }
       }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "read_mcp_resource",
+        "description": "Lit le contenu complet d'une fiche technique ou ressource à partir de son URI. Utilise ceci impérativement quand tu as besoin de consulter une fiche listée dans le contexte.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "L'URI exacte de la ressource (ex: doc://badminton/fiches/smash.txt)"
+            }
+          },
+          "required": [
+            "uri"
+          ]
+        }
+      }
     }
   ],
   "tool_choice": "auto"
 }
-20:17:57 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"f1735f5b8bd2498da1a4fa42e2a9d820","created":1767554276,"model":"mistral-small-latest","usage":{"prompt_tokens":120,"total_tokens":182,"completion_tokens":62},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"hpSzVV0P9","function":{"name":"preparer_analyse_video","arguments":"{}"},"index":0}],"content":"D'accord, je vais préparer l'interface pour l'analyse de votre vidéo de badminton. Vous pourrez ensuite uploader votre vidéo et nous pourrons détecter les coups, analyser la trajectoire du volant, etc.\n\nJe vais commencer la préparation."}}]}
-20:17:57 - INFO - Requête client MCP (tools/call): {
-  "jsonrpc": "2.0",
-  "method": "tools/call",
-  "params": {
-    "name": "preparer_analyse_video",
-    "arguments": {}
-  },
-  "id": 1
-}
-20:17:57 - INFO - Réponse serveur MCP (tools/call) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "content": [
-      {
-        "type": "text",
-        "text": "{\n  \"action\": \"redirect_to_upload\",\n  \"message\": \"Je prépare l'interface d'analyse. Veuillez sélectionner votre vidéo de badminton.\",\n  \"status\": \"ready\"\n}"
-      }
-    ],
-    "structuredContent": {
-      "result": {
-        "action": "redirect_to_upload",
-        "message": "Je prépare l'interface d'analyse. Veuillez sélectionner votre vidéo de badminton.",
-        "status": "ready"
-      }
-    },
-    "isError": false
-  }
-}
-20:37:37 - INFO - Requête client MCP (initialize): {
+12:04:32 - INFO - 📣 RESP Mistral API: OK (498 bytes)
+12:09:44 - INFO - Requête client MCP (initialize): {
   "jsonrpc": "2.0",
   "method": "initialize",
   "params": {
@@ -266,7 +489,7 @@
   },
   "id": 1
 }
-20:37:37 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
+12:09:44 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
@@ -290,13 +513,13 @@
     }
   }
 }
-20:37:37 - INFO - Requête client MCP (tools/list): {
+12:09:44 - INFO - Requête client MCP (tools/list): {
   "jsonrpc": "2.0",
   "method": "tools/list",
   "params": {},
   "id": 1
 }
-20:37:37 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
+12:09:44 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
@@ -327,138 +550,132 @@
     ]
   }
 }
-20:37:37 - INFO - Requête client MCP (resources/list): {
+12:09:44 - INFO - Requête client MCP (resources/list): {
   "jsonrpc": "2.0",
   "method": "resources/list",
   "params": {},
   "id": 1
 }
-20:37:37 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
+12:09:44 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
-    "resources": []
-  }
-}
-20:37:37 - INFO - 📢 REQ Mistral API: {
-  "model": "mistral-small-latest",
-  "messages": [
-    {
-      "role": "user",
-      "content": "Salut Michel !"
-    }
-  ],
-  "temperature": 0.3,
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "parameters": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        }
-      }
-    }
-  ],
-  "tool_choice": "auto"
-}
-20:37:38 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"a212fb8ae1084cd8885b012bf6ef0f69","created":1767641857,"model":"mistral-small-latest","usage":{"prompt_tokens":116,"total_tokens":128,"completion_tokens":12},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Salut ! Comment puis-je vous aider aujourd'hui ?"}}]}
-20:40:14 - INFO - Requête client MCP (initialize): {
-  "jsonrpc": "2.0",
-  "method": "initialize",
-  "params": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {},
-    "clientInfo": {
-      "name": "mcp-mistral-requests-client",
-      "version": "1.0.0"
-    }
-  },
-  "id": 1
-}
-20:40:14 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {
-      "experimental": {},
-      "prompts": {
-        "listChanged": false
-      },
-      "resources": {
-        "subscribe": false,
-        "listChanged": false
-      },
-      "tools": {
-        "listChanged": false
-      }
-    },
-    "serverInfo": {
-      "name": "serveur_mcp_pierre_defourneaux",
-      "version": "1.23.1"
-    }
-  }
-}
-20:40:14 - INFO - Requête client MCP (tools/list): {
-  "jsonrpc": "2.0",
-  "method": "tools/list",
-  "params": {},
-  "id": 1
-}
-20:40:14 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "tools": [
+    "resources": [
       {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "inputSchema": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        },
-        "outputSchema": {
-          "properties": {
-            "result": {
-              "additionalProperties": true,
-              "title": "Result",
-              "type": "object"
-            }
-          },
-          "required": [
-            "result"
-          ],
-          "title": "preparer_analyse_videoOutput",
-          "type": "object"
-        }
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/tactique_mixte.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/prevention_des_blessures.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/tactique_double.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_service_revers.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_double_homme.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_amorti_fond_de_court.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_contre_amorti.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_degage_defensif.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_sercice_coup_droit.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_simple.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_mixte.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_smash.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_degage_offensif.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/strategie_double_dame.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/tactique_simple.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/preparation_physique.txt",
+        "description": "",
+        "mimeType": "text/plain"
+      },
+      {
+        "name": "read_document",
+        "uri": "doc://badminton/fiches/technique_reverse_slice.txt",
+        "description": "",
+        "mimeType": "text/plain"
       }
     ]
   }
 }
-20:40:14 - INFO - Requête client MCP (resources/list): {
-  "jsonrpc": "2.0",
-  "method": "resources/list",
-  "params": {},
-  "id": 1
-}
-20:40:14 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "resources": []
-  }
-}
-20:40:14 - INFO - 📢 REQ Mistral API: {
+12:09:44 - INFO - 📢 REQ Mistral API: {
   "model": "mistral-small-latest",
   "messages": [
     {
+      "role": "system",
+      "content": "Tu es Bad'IA, un coach expert en badminton (Technique, Tactique, Stratégie).\nTon ton est encourageant, précis et sportif.\nSi une action nécessite une confirmation de l'utilisateur (comme lancer une analyse vidéo lourde), demande-lui confirmation avant d'utiliser l'outil.\n\n📚 Fiches techniques disponibles (Ressources MCP) :\n- read_document (URI: doc://badminton/fiches/tactique_mixte.txt) : \n- read_document (URI: doc://badminton/fiches/prevention_des_blessures.txt) : \n- read_document (URI: doc://badminton/fiches/tactique_double.txt) : \n- read_document (URI: doc://badminton/fiches/technique_service_revers.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_double_homme.txt) : \n- read_document (URI: doc://badminton/fiches/technique_amorti_fond_de_court.txt) : \n- read_document (URI: doc://badminton/fiches/technique_contre_amorti.txt) : \n- read_document (URI: doc://badminton/fiches/technique_degage_defensif.txt) : \n- read_document (URI: doc://badminton/fiches/technique_sercice_coup_droit.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_simple.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_mixte.txt) : \n- read_document (URI: doc://badminton/fiches/technique_smash.txt) : \n- read_document (URI: doc://badminton/fiches/technique_degage_offensif.txt) : \n- read_document (URI: doc://badminton/fiches/strategie_double_dame.txt) : \n- read_document (URI: doc://badminton/fiches/tactique_simple.txt) : \n- read_document (URI: doc://badminton/fiches/preparation_physique.txt) : \n- read_document (URI: doc://badminton/fiches/technique_reverse_slice.txt) : \n\nSi l'utilisateur pose une question théorique couverte par une fiche, utilise l'outil 'read_mcp_resource' avec l'URI correspondante."
+    },
+    {
       "role": "user",
-      "content": "Quelle est la rect"
+      "content": "J'ai besoin de conseils sur la technique du reverse slice"
     }
   ],
   "temperature": 0.3,
@@ -474,744 +691,63 @@
           "type": "object"
         }
       }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "read_mcp_resource",
+        "description": "Lit le contenu complet d'une fiche technique ou ressource à partir de son URI. Utilise ceci impérativement quand tu as besoin de consulter une fiche listée dans le contexte.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "L'URI exacte de la ressource (ex: doc://badminton/fiches/smash.txt)"
+            }
+          },
+          "required": [
+            "uri"
+          ]
+        }
+      }
     }
   ],
   "tool_choice": "auto"
 }
-20:40:15 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"ee5f728e8569453589524357dea5a176","created":1767642014,"model":"mistral-small-latest","usage":{"prompt_tokens":117,"total_tokens":145,"completion_tokens":28},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Il semble que votre question soit incomplète. Pourriez-vous la compléter ou la reformuler pour que je puisse mieux vous aider ?"}}]}
-20:40:26 - INFO - Requête client MCP (initialize): {
+12:09:44 - INFO - 📣 RESP Mistral API: OK (453 bytes)
+12:09:44 - INFO - Requête client MCP (resources/read): {
   "jsonrpc": "2.0",
-  "method": "initialize",
+  "method": "resources/read",
   "params": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {},
-    "clientInfo": {
-      "name": "mcp-mistral-requests-client",
-      "version": "1.0.0"
-    }
+    "uri": "doc://badminton/fiches/technique_reverse_slice.txt"
   },
   "id": 1
 }
-20:40:26 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
+12:09:44 - INFO - Réponse serveur MCP (resources/read) STATUT 200: {
   "jsonrpc": "2.0",
   "id": 1,
   "result": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {
-      "experimental": {},
-      "prompts": {
-        "listChanged": false
-      },
-      "resources": {
-        "subscribe": false,
-        "listChanged": false
-      },
-      "tools": {
-        "listChanged": false
-      }
-    },
-    "serverInfo": {
-      "name": "serveur_mcp_pierre_defourneaux",
-      "version": "1.23.1"
-    }
-  }
-}
-20:40:26 - INFO - Requête client MCP (tools/list): {
-  "jsonrpc": "2.0",
-  "method": "tools/list",
-  "params": {},
-  "id": 1
-}
-20:40:26 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "tools": [
+    "contents": [
       {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "inputSchema": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        },
-        "outputSchema": {
-          "properties": {
-            "result": {
-              "additionalProperties": true,
-              "title": "Result",
-              "type": "object"
-            }
-          },
-          "required": [
-            "result"
-          ],
-          "title": "preparer_analyse_videoOutput",
-          "type": "object"
-        }
+        "uri": "doc://badminton/fiches/technique_reverse_slice.txt",
+        "mimeType": "text/plain",
+        "text": "Fiche technique – Le Reverse-Slice (Badminton)\n\nObjectif du reverse-slice\nLe reverse-slice est un coup avancé et trompeur, utilisé principalement en fond de court. Il consiste à frapper la navette avec un mouvement inversé du tamis, créant un effet coupé qui ralentit la trajectoire et modifie l’angle de sortie. Son but est de déséquilibrer l’adversaire, casser son timing et provoquer une réponse faible.\n\n1. Quand utiliser le reverse-slice\n\nEn situation offensive contrôlée : Lorsque le placement est stable.\n\nPour varier le jeu : Après une série de smashs ou de dégagés classiques.\n\nFace à un adversaire en lecture anticipée : Qui se déplace tôt sur les trajectoires standards.\n\nPour attaquer le revers adverse avec une trajectoire sortante.\n\n2. Principes techniques essentiels\n\nPréparation identique au smash ou à l’amorti : Le déguisement est fondamental.\n\nPrise relâchée : La finesse du poignet prime sur la force.\n\nOrientation du tamis inversée : La raquette coupe la navette de l’intérieur vers l’extérieur.\n\nContact légèrement décalé : Sur le côté de la navette, jamais plein centre.\n\nFinition courte : Le geste est contrôlé pour maintenir l’effet.\n\n3. Trajectoire et effets recherchés\n\nTrajectoire flottante : La navette ralentit brutalement après le filet.\n\nAngle sortant : Elle s’écarte du couloir adverse en fin de course.\n\nRebond visuel trompeur : L’adversaire lit un smash ou un dégagé classique trop tard.\n\n4. Zones ciblées\n\nDiagonale fond de court : Zone la plus efficace.\n\nCouloir revers : Souvent difficile à couvrir après un déplacement anticipé.\n\nZone avant (en version amortie) : Pour surprendre un adversaire reculé.\n\n5. Enchaînement tactique\n\nAvancer légèrement après la frappe : Le retour est souvent court.\n\nÊtre prêt à tuer au filet : Le reverse-slice provoque des lifts faibles.\n\nAlterner avec le smash plein : Rend la lecture quasi impossible.\n\n6. Erreurs fréquentes\n\nForcer l’effet → perte de contrôle.\n\nMauvais placement du corps → faute directe.\n\nUtilisation excessive → perte de surprise.\n\nClé du succès : maîtrise technique, déguisement et intention tactique claire. Le reverse-slice est une arme de joueur expert, destinée à faire jouer l’adversaire dans le doute permanent."
       }
     ]
   }
 }
-20:40:26 - INFO - Requête client MCP (resources/list): {
-  "jsonrpc": "2.0",
-  "method": "resources/list",
-  "params": {},
-  "id": 1
-}
-20:40:26 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "resources": []
-  }
-}
-20:40:26 - INFO - 📢 REQ Mistral API: {
+12:09:44 - INFO - 📢 REQ Mistral API: {
   "model": "mistral-small-latest",
   "messages": [
     {
-      "role": "user",
-      "content": "Quelle est la recette des cookies ?"
-    }
-  ],
-  "temperature": 0.3,
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "parameters": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        }
-      }
-    }
-  ],
-  "tool_choice": "auto"
-}
-20:40:29 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"e8639b77867d430886cf53dfc123532c","created":1767642025,"model":"mistral-small-latest","usage":{"prompt_tokens":121,"total_tokens":545,"completion_tokens":424},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Voici une recette classique pour préparer des cookies :\n\n### Ingrédients :\n- 225 g de beurre mou\n- 200 g de sucre roux\n- 1 œuf\n- 300 g de farine\n- 1 sachet de levure chimique (11 g)\n- 1 pincée de sel\n- 150 g de pépites de chocolat (ou des morceaux de chocolat coupés en petits morceaux)\n\n### Instructions :\n\n1. **Préchauffez le four** à 180°C (thermostat 6).\n\n2. **Mélangez le beurre et le sucre** : Dans un grand bol, mélangez le beurre mou et le sucre roux jusqu'à obtenir un mélange crémeux.\n\n3. **Ajoutez l'œuf** : Incorporez l'œuf au mélange beurre-sucre et mélangez bien.\n\n4. **Incorporez les ingrédients secs** : Ajoutez la farine, la levure chimique et la pincée de sel. Mélangez jusqu'à obtenir une pâte homogène.\n\n5. **Ajoutez les pépites de chocolat** : Incorporez les pépites de chocolat à la pâte et mélangez pour bien les répartir.\n\n6. **Formez les cookies** : À l'aide d'une cuillère à glace ou de vos mains, formez des boules de pâte et aplatissez-les légèrement sur une plaque de cuisson recouverte de papier sulfurisé.\n\n7. **Cuisson** : Enfournez les cookies pendant 10 à 12 minutes, ou jusqu'à ce que les bords soient légèrement dorés. Les cookies seront encore mous, mais ils durciront en refroidissant.\n\n8. **Laissez refroidir** : Sortez les cookies du four et laissez-les refroidir sur une grille avant de les déguster.\n\nBon appétit !"}}]}
-20:41:40 - INFO - Requête client MCP (initialize): {
-  "jsonrpc": "2.0",
-  "method": "initialize",
-  "params": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {},
-    "clientInfo": {
-      "name": "mcp-mistral-requests-client",
-      "version": "1.0.0"
-    }
-  },
-  "id": 1
-}
-20:41:40 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {
-      "experimental": {},
-      "prompts": {
-        "listChanged": false
-      },
-      "resources": {
-        "subscribe": false,
-        "listChanged": false
-      },
-      "tools": {
-        "listChanged": false
-      }
+      "role": "system",
+      "content": "Tu es Bad'IA, expert en badminton. Reformule les données techniques JSON reçues en une réponse claire, pédagogique et structurée pour le joueur. Utilise le vouvoiement."
     },
-    "serverInfo": {
-      "name": "serveur_mcp_pierre_defourneaux",
-      "version": "1.23.1"
-    }
-  }
-}
-20:41:40 - INFO - Requête client MCP (tools/list): {
-  "jsonrpc": "2.0",
-  "method": "tools/list",
-  "params": {},
-  "id": 1
-}
-20:41:40 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "tools": [
-      {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "inputSchema": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        },
-        "outputSchema": {
-          "properties": {
-            "result": {
-              "additionalProperties": true,
-              "title": "Result",
-              "type": "object"
-            }
-          },
-          "required": [
-            "result"
-          ],
-          "title": "preparer_analyse_videoOutput",
-          "type": "object"
-        }
-      }
-    ]
-  }
-}
-20:41:40 - INFO - Requête client MCP (resources/list): {
-  "jsonrpc": "2.0",
-  "method": "resources/list",
-  "params": {},
-  "id": 1
-}
-20:41:40 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "resources": []
-  }
-}
-20:41:40 - INFO - 📢 REQ Mistral API: {
-  "model": "mistral-small-latest",
-  "messages": [
     {
       "role": "user",
-      "content": "Je veux analyser ma vidéo de badminton"
+      "content": "Voici la question du joueur : 'Voici le contenu de la fiche technique demandée. Utilise-le pour répondre précisément à la question : 'J'ai besoin de conseils sur la technique du reverse slice''.\nVoici le résultat technique brut : {\"content\": \"Fiche technique – Le Reverse-Slice (Badminton)\\n\\nObjectif du reverse-slice\\nLe reverse-slice est un coup avancé et trompeur, utilisé principalement en fond de court. Il consiste à frapper la navette avec un mouvement inversé du tamis, créant un effet coupé qui ralentit la trajectoire et modifie l’angle de sortie. Son but est de déséquilibrer l’adversaire, casser son timing et provoquer une réponse faible.\\n\\n1. Quand utiliser le reverse-slice\\n\\nEn situation offensive contrôlée : Lorsque le placement est stable.\\n\\nPour varier le jeu : Après une série de smashs ou de dégagés classiques.\\n\\nFace à un adversaire en lecture anticipée : Qui se déplace tôt sur les trajectoires standards.\\n\\nPour attaquer le revers adverse avec une trajectoire sortante.\\n\\n2. Principes techniques essentiels\\n\\nPréparation identique au smash ou à l’amorti : Le déguisement est fondamental.\\n\\nPrise relâchée : La finesse du poignet prime sur la force.\\n\\nOrientation du tamis inversée : La raquette coupe la navette de l’intérieur vers l’extérieur.\\n\\nContact légèrement décalé : Sur le côté de la navette, jamais plein centre.\\n\\nFinition courte : Le geste est contrôlé pour maintenir l’effet.\\n\\n3. Trajectoire et effets recherchés\\n\\nTrajectoire flottante : La navette ralentit brutalement après le filet.\\n\\nAngle sortant : Elle s’écarte du couloir adverse en fin de course.\\n\\nRebond visuel trompeur : L’adversaire lit un smash ou un dégagé classique trop tard.\\n\\n4. Zones ciblées\\n\\nDiagonale fond de court : Zone la plus efficace.\\n\\nCouloir revers : Souvent difficile à couvrir après un déplacement anticipé.\\n\\nZone avant (en version amortie) : Pour surprendre un adversaire reculé.\\n\\n5. Enchaînement tactique\\n\\nAvancer légèrement après la frappe : Le retour est souvent court.\\n\\nÊtre prêt à tuer au filet : Le reverse-slice provoque des lifts faibles.\\n\\nAlterner avec le smash plein : Rend la lecture quasi impossible.\\n\\n6. Erreurs fréquentes\\n\\nForcer l’effet → perte de contrôle.\\n\\nMauvais placement du corps → faute directe.\\n\\nUtilisation excessive → perte de surprise.\\n\\nClé du succès : maîtrise technique, déguisement et intention tactique claire. Le reverse-slice est une arme de joueur expert, destinée à faire jouer l’adversaire dans le doute permanent.\"}"
     }
   ],
-  "temperature": 0.3,
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "parameters": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        }
-      }
-    }
-  ],
-  "tool_choice": "auto"
+  "temperature": 0.7
 }
-20:41:40 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"1d660ba8654f42a2a8155e3265862c26","created":1767642100,"model":"mistral-small-latest","usage":{"prompt_tokens":121,"total_tokens":131,"completion_tokens":10},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"qDnGLb7HU","function":{"name":"preparer_analyse_video","arguments":"{}"},"index":0}],"content":""}}]}
-20:41:40 - INFO - Requête client MCP (tools/call): {
-  "jsonrpc": "2.0",
-  "method": "tools/call",
-  "params": {
-    "name": "preparer_analyse_video",
-    "arguments": {}
-  },
-  "id": 1
-}
-20:41:40 - INFO - Réponse serveur MCP (tools/call) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "content": [
-      {
-        "type": "text",
-        "text": "{\n  \"action\": \"redirect_to_upload\",\n  \"message\": \"Je prépare l'interface d'analyse. Veuillez sélectionner votre vidéo de badminton.\",\n  \"status\": \"ready\"\n}"
-      }
-    ],
-    "structuredContent": {
-      "result": {
-        "action": "redirect_to_upload",
-        "message": "Je prépare l'interface d'analyse. Veuillez sélectionner votre vidéo de badminton.",
-        "status": "ready"
-      }
-    },
-    "isError": false
-  }
-}
-20:44:51 - INFO - Requête client MCP (initialize): {
-  "jsonrpc": "2.0",
-  "method": "initialize",
-  "params": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {},
-    "clientInfo": {
-      "name": "mcp-mistral-requests-client",
-      "version": "1.0.0"
-    }
-  },
-  "id": 1
-}
-20:44:51 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {
-      "experimental": {},
-      "prompts": {
-        "listChanged": false
-      },
-      "resources": {
-        "subscribe": false,
-        "listChanged": false
-      },
-      "tools": {
-        "listChanged": false
-      }
-    },
-    "serverInfo": {
-      "name": "serveur_mcp_pierre_defourneaux",
-      "version": "1.23.1"
-    }
-  }
-}
-20:44:51 - INFO - Requête client MCP (tools/list): {
-  "jsonrpc": "2.0",
-  "method": "tools/list",
-  "params": {},
-  "id": 1
-}
-20:44:51 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "tools": [
-      {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "inputSchema": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        },
-        "outputSchema": {
-          "properties": {
-            "result": {
-              "additionalProperties": true,
-              "title": "Result",
-              "type": "object"
-            }
-          },
-          "required": [
-            "result"
-          ],
-          "title": "preparer_analyse_videoOutput",
-          "type": "object"
-        }
-      }
-    ]
-  }
-}
-20:44:51 - INFO - Requête client MCP (resources/list): {
-  "jsonrpc": "2.0",
-  "method": "resources/list",
-  "params": {},
-  "id": 1
-}
-20:44:51 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "resources": []
-  }
-}
-20:44:51 - INFO - 📢 REQ Mistral API: {
-  "model": "mistral-small-latest",
-  "messages": [
-    {
-      "role": "user",
-      "content": "je veux analyser une video"
-    }
-  ],
-  "temperature": 0.3,
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "parameters": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        }
-      }
-    }
-  ],
-  "tool_choice": "auto"
-}
-20:44:52 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"eefda2e98fa646ab9d50e6988d12d985","created":1767642290,"model":"mistral-small-latest","usage":{"prompt_tokens":118,"total_tokens":147,"completion_tokens":29},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"D'accord, je vais préparer l'interface pour l'analyse de votre vidéo de badminton. Veuillez uploader votre vidéo."}}]}
-20:45:13 - INFO - Requête client MCP (initialize): {
-  "jsonrpc": "2.0",
-  "method": "initialize",
-  "params": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {},
-    "clientInfo": {
-      "name": "mcp-mistral-requests-client",
-      "version": "1.0.0"
-    }
-  },
-  "id": 1
-}
-20:45:13 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {
-      "experimental": {},
-      "prompts": {
-        "listChanged": false
-      },
-      "resources": {
-        "subscribe": false,
-        "listChanged": false
-      },
-      "tools": {
-        "listChanged": false
-      }
-    },
-    "serverInfo": {
-      "name": "serveur_mcp_pierre_defourneaux",
-      "version": "1.23.1"
-    }
-  }
-}
-20:45:13 - INFO - Requête client MCP (tools/list): {
-  "jsonrpc": "2.0",
-  "method": "tools/list",
-  "params": {},
-  "id": 1
-}
-20:45:13 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "tools": [
-      {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "inputSchema": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        },
-        "outputSchema": {
-          "properties": {
-            "result": {
-              "additionalProperties": true,
-              "title": "Result",
-              "type": "object"
-            }
-          },
-          "required": [
-            "result"
-          ],
-          "title": "preparer_analyse_videoOutput",
-          "type": "object"
-        }
-      }
-    ]
-  }
-}
-20:45:13 - INFO - Requête client MCP (resources/list): {
-  "jsonrpc": "2.0",
-  "method": "resources/list",
-  "params": {},
-  "id": 1
-}
-20:45:13 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "resources": []
-  }
-}
-20:45:13 - INFO - 📢 REQ Mistral API: {
-  "model": "mistral-small-latest",
-  "messages": [
-    {
-      "role": "user",
-      "content": "je veux analyser une vidéo"
-    }
-  ],
-  "temperature": 0.3,
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "parameters": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        }
-      }
-    }
-  ],
-  "tool_choice": "auto"
-}
-20:45:13 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"be24b3b072a54941a6bc25503fc3405f","created":1767642312,"model":"mistral-small-latest","usage":{"prompt_tokens":118,"total_tokens":180,"completion_tokens":62},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"kXZQA2jZq","function":{"name":"preparer_analyse_video","arguments":"{}"},"index":0}],"content":"D'accord, je vais préparer l'interface pour l'analyse de votre vidéo de badminton. Vous pourrez ensuite uploader votre vidéo pour que nous puissions détecter les coups, suivre la trajectoire du volant, et plus encore. Allons-y !"}}]}
-20:45:13 - INFO - Requête client MCP (tools/call): {
-  "jsonrpc": "2.0",
-  "method": "tools/call",
-  "params": {
-    "name": "preparer_analyse_video",
-    "arguments": {}
-  },
-  "id": 1
-}
-20:45:13 - INFO - Réponse serveur MCP (tools/call) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "content": [
-      {
-        "type": "text",
-        "text": "{\n  \"action\": \"redirect_to_upload\",\n  \"message\": \"Je prépare l'interface d'analyse. Veuillez sélectionner votre vidéo de badminton.\",\n  \"status\": \"ready\"\n}"
-      }
-    ],
-    "structuredContent": {
-      "result": {
-        "action": "redirect_to_upload",
-        "message": "Je prépare l'interface d'analyse. Veuillez sélectionner votre vidéo de badminton.",
-        "status": "ready"
-      }
-    },
-    "isError": false
-  }
-}
-20:46:12 - INFO - Requête client MCP (initialize): {
-  "jsonrpc": "2.0",
-  "method": "initialize",
-  "params": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {},
-    "clientInfo": {
-      "name": "mcp-mistral-requests-client",
-      "version": "1.0.0"
-    }
-  },
-  "id": 1
-}
-20:46:12 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {
-      "experimental": {},
-      "prompts": {
-        "listChanged": false
-      },
-      "resources": {
-        "subscribe": false,
-        "listChanged": false
-      },
-      "tools": {
-        "listChanged": false
-      }
-    },
-    "serverInfo": {
-      "name": "serveur_mcp_pierre_defourneaux",
-      "version": "1.23.1"
-    }
-  }
-}
-20:46:12 - INFO - Requête client MCP (tools/list): {
-  "jsonrpc": "2.0",
-  "method": "tools/list",
-  "params": {},
-  "id": 1
-}
-20:46:12 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "tools": [
-      {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "inputSchema": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        },
-        "outputSchema": {
-          "properties": {
-            "result": {
-              "additionalProperties": true,
-              "title": "Result",
-              "type": "object"
-            }
-          },
-          "required": [
-            "result"
-          ],
-          "title": "preparer_analyse_videoOutput",
-          "type": "object"
-        }
-      }
-    ]
-  }
-}
-20:46:12 - INFO - Requête client MCP (resources/list): {
-  "jsonrpc": "2.0",
-  "method": "resources/list",
-  "params": {},
-  "id": 1
-}
-20:46:12 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "resources": []
-  }
-}
-20:46:12 - INFO - 📢 REQ Mistral API: {
-  "model": "mistral-small-latest",
-  "messages": [
-    {
-      "role": "user",
-      "content": "Quelles sont les règles du badminton ?"
-    }
-  ],
-  "temperature": 0.3,
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "parameters": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        }
-      }
-    }
-  ],
-  "tool_choice": "auto"
-}
-20:46:20 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"13cd0359cf914dec88d1009fbe87e35e","created":1767642371,"model":"mistral-small-latest","usage":{"prompt_tokens":121,"total_tokens":721,"completion_tokens":600},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Le badminton est un sport de raquette qui peut être pratiqué en simple (un contre un) ou en double (deux contre deux). Voici les règles principales du badminton :\n\n### 1. **Terrain**\n- Le terrain de badminton est rectangulaire et mesurant 13,40 mètres de long et 6,10 mètres de large pour les doubles, et 5,18 mètres de large pour les simples.\n- Le terrain est divisé en deux moitiés par un filet de 1,55 mètre de haut au centre et de 1,52 mètre de haut aux poteaux.\n\n### 2. **Équipement**\n- **Raquette** : Les raquettes de badminton sont légères et ont des cordages tendus.\n- **Volant** : Le volant, ou \"shuttlecock\", est composé d'une base en liège ou en plastique et de plumes (généralement 16 plumes de canard ou de plume synthétique).\n\n### 3. **Déroulement du jeu**\n- **Service** : Le service se fait derrière la ligne de service. Le serveur doit frapper le volant de bas en haut pour qu'il passe par-dessus le filet dans le carré de service diagonal opposé.\n- **Rotation des joueurs** : En double, les joueurs tournent dans le sens des aiguilles d'une montre après chaque point marqué par l'équipe qui sert.\n\n### 4. **Scoring**\n- Un match se joue en trois sets. Le premier joueur ou équipe à atteindre 21 points avec une différence de 2 points remporte le set. Si le score atteint 20-20, le jeu continue jusqu'à ce qu'un joueur ou une équipe ait 2 points d'avance.\n- Si les deux équipes gagnent un set chacune, un troisième set décisif est joué pour déterminer le vainqueur.\n\n### 5. **Règles de base**\n- Le volant ne doit pas toucher le sol.\n- Le volant doit passer par-dessus le filet.\n- Le serveur ne peut pas servir deux fois de suite.\n- Les joueurs ne peuvent pas toucher le filet ou l'encadrement avec leur corps ou leur raquette pendant le jeu.\n- Si le volant touche le filet mais passe quand même de l'autre côté, il est considéré comme bon.\n\n### 6. **Fautes**\n- **Double touche** : Toucher le volant deux fois de suite avec la raquette.\n- **Toucher le filet** : Toucher le filet ou son support avec le corps ou la raquette pendant le jeu.\n- **Service incorrect** : Ne pas servir correctement selon les règles de service.\n\nCes règles assurent un jeu équitable et compétitif. Si vous avez des questions spécifiques ou besoin de précisions sur certaines règles, n'hésitez pas à demander !"}}]}
-20:54:27 - INFO - Requête client MCP (initialize): {
-  "jsonrpc": "2.0",
-  "method": "initialize",
-  "params": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {},
-    "clientInfo": {
-      "name": "mcp-mistral-requests-client",
-      "version": "1.0.0"
-    }
-  },
-  "id": 1
-}
-20:54:27 - INFO - Réponse serveur MCP (initialize) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {
-      "experimental": {},
-      "prompts": {
-        "listChanged": false
-      },
-      "resources": {
-        "subscribe": false,
-        "listChanged": false
-      },
-      "tools": {
-        "listChanged": false
-      }
-    },
-    "serverInfo": {
-      "name": "serveur_mcp_pierre_defourneaux",
-      "version": "1.23.1"
-    }
-  }
-}
-20:54:27 - INFO - Requête client MCP (tools/list): {
-  "jsonrpc": "2.0",
-  "method": "tools/list",
-  "params": {},
-  "id": 1
-}
-20:54:27 - INFO - Réponse serveur MCP (tools/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "tools": [
-      {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "inputSchema": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        },
-        "outputSchema": {
-          "properties": {
-            "result": {
-              "additionalProperties": true,
-              "title": "Result",
-              "type": "object"
-            }
-          },
-          "required": [
-            "result"
-          ],
-          "title": "preparer_analyse_videoOutput",
-          "type": "object"
-        }
-      }
-    ]
-  }
-}
-20:54:27 - INFO - Requête client MCP (resources/list): {
-  "jsonrpc": "2.0",
-  "method": "resources/list",
-  "params": {},
-  "id": 1
-}
-20:54:27 - INFO - Réponse serveur MCP (resources/list) STATUT 200: {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "resources": []
-  }
-}
-20:54:27 - INFO - 📢 REQ Mistral API: {
-  "model": "mistral-small-latest",
-  "messages": [
-    {
-      "role": "user",
-      "content": "Pourquoi les patates sont jaunes et pas vert fluo ?"
-    }
-  ],
-  "temperature": 0.3,
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "preparer_analyse_video",
-        "description": "\n        Prépare l'interface pour l'analyse d'une vidéo de badminton (détection de coups, \n        trajectoire du volant, etc.). \n        À utiliser quand l'utilisateur veut analyser son jeu ou uploader une vidéo.\n        ",
-        "parameters": {
-          "properties": {},
-          "title": "preparer_analyse_videoArguments",
-          "type": "object"
-        }
-      }
-    }
-  ],
-  "tool_choice": "auto"
-}
-20:54:31 - INFO - 📣 RESP Mistral API STATUT 200: {"id":"7f8224b009f8489483c53687a88878b5","created":1767642866,"model":"mistral-small-latest","usage":{"prompt_tokens":126,"total_tokens":552,"completion_tokens":426},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Les patates, ou pommes de terre, sont généralement de couleur jaune, beige ou marron en raison de leur composition génétique et biochimique. La couleur des pommes de terre est déterminée par les pigments présents dans leur peau et leur chair. Voici quelques raisons pour lesquelles elles ne sont pas vert fluo :\n\n1. **Pigments naturels** : Les pommes de terre contiennent des pigments naturels comme les caroténoïdes (qui donnent des couleurs jaunes, oranges) et les anthocyanes (qui donnent des couleurs rouges, violettes). Ces pigments sont produits par les plantes pour diverses raisons, y compris la protection contre les rayons UV et l'attraction des pollinisateurs.\n\n2. **Évolution et adaptation** : Les pommes de terre ont évolué pour avoir des couleurs qui les aident à se camoufler dans leur environnement naturel, ce qui peut les protéger contre les herbivores. Le vert fluo n'est pas une couleur courante dans la nature et ne serait pas avantageux pour la survie de la plante.\n\n3. **Absence de besoin de fluorescence** : La fluorescence verte n'est pas un trait communément observé chez les plantes comestibles. Les plantes utilisent généralement la chlorophylle pour la photosynthèse, ce qui donne une couleur verte, mais ce n'est pas une fluorescence.\n\n4. **Sélection génétique** : Les variétés de pommes de terre que nous cultivons aujourd'hui ont été sélectionnées par les agriculteurs au fil des siècles pour leurs caractéristiques désirables, telles que la taille, le goût et la couleur. Les pommes de terre vert fluo n'ont jamais été sélectionnées car elles n'offrent aucun avantage particulier.\n\nEn résumé, les pommes de terre sont jaunes ou de couleurs similaires en raison de leur composition biochimique, de leur évolution et des pratiques agricoles. Le vert fluo n'est pas une couleur naturelle pour les pommes de terre en raison de l'absence de pigments fluorescents et de l'absence de sélection pour cette caractéristique."}}]}
+12:09:54 - INFO - 📣 RESP Mistral API: OK (3128 bytes)

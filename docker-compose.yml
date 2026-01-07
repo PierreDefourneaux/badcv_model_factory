@@ -4,7 +4,7 @@ services:
       context: ./containers/mcp_server_ctn_dir
       dockerfile: Dockerfile.mcp_server
     volumes:
-      - ./datas:/app/badia_files
+      - ./datas_server:/app/badia_server_files
     container_name: MCP_SERVER_CONTAINER
     ports:
       - "8000:8000"
@@ -30,6 +30,8 @@ services:
       - ./containers/flask_ctn_dir:/app
       # Pour les magnifiques logs json rcp du client mcp :
       - ./logs/mcp_client:/app/logs_ctn_flask
+      # Pour les uploads video :
+      - ./datas_client:/app/badia_client_files
     container_name: FLASK_AND_MCP_CLIENT_CONTAINER
     ports:
       - "5000:5000"
