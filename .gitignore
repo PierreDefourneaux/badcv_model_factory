@@ -19,3 +19,5 @@ train_model.py
 data_keras/
 yolo_data/
 datas/
+datas_server/
+datas_client/
