@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bad'IA - Assistant Badminton</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Bienvenue sur Bad'IA</h1>
+</header>
+
+<div class="main-container">
+    
+    <div class="box">
+        <div class="box-header">🤖 Chatbot MCP</div>
+        <div class="content">
+            <div id="chat-window">
+                <p><strong>Système:</strong> Bonjour ! Je suis votre assistant badminton. Vous pouvez me demander d'analyser une vidéo ou poser des questions sur les règles.</p>
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <input type="text" placeholder="Ex: 'Je veux analyser mon match'..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                <button style="padding: 10px 20px; background-color: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer;">Envoyer</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const chatInput = document.querySelector('input[type="text"]');
+    const sendButton = document.querySelector('button');
+    const chatWindow = document.getElementById('chat-window');
+
+    // Fonction pour ajouter un message dans la fenêtre
+    function addMessage(text, sender) {
+        const div = document.createElement('div');
+        div.style.marginBottom = '10px';
+        div.style.padding = '8px';
+        div.style.borderRadius = '4px';
+        div.style.maxWidth = '80%'; // Pour éviter que les bulles ne soient trop larges
+        
+        if (sender === 'user') {
+            div.style.background = '#e3f2fd';
+            div.style.textAlign = 'right';
+            div.style.marginLeft = 'auto'; // Aligne à droite
+            div.innerHTML = `<strong>Vous:</strong> ${text}`;
+        } else {
+            div.style.background = '#f1f1f1';
+            div.style.textAlign = 'left';
+            div.style.marginRight = 'auto'; // Aligne à gauche
+            div.innerHTML = `<strong>Assistant:</strong> ${text.replace(/\n/g, '<br>')}`;
+        }
+        
+        chatWindow.appendChild(div);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    // Fonction d'envoi avec gestion de redirection
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        addMessage(message, 'user');
+        chatInput.value = '';
+        chatInput.disabled = true;
+
+        // Indicateur de chargement
+        const loadingDiv = document.createElement('div');
+        loadingDiv.id = 'loading';
+        loadingDiv.textContent = 'L\'agent réfléchit...';
+        loadingDiv.style.fontStyle = 'italic';
+        loadingDiv.style.color = '#888';
+        loadingDiv.style.fontSize = '0.8em';
+        loadingDiv.style.padding = '5px';
+        chatWindow.appendChild(loadingDiv);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            });
+
+            const data = await response.json();
+            
+            const loader = document.getElementById('loading');
+            if (loader) loader.remove();
+
+            if (data.error) {
+                addMessage("Erreur: " + data.error, 'bot');
+            } else {
+                addMessage(data.response, 'bot');
+
+                // --- REDIRECTION ---
+                if (data.redirect) {
+                    chatInput.disabled = true;
+                    chatInput.placeholder = "Redirection vers l'analyse...";
+                    
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 2000);
+                    return; 
+                }
+            }
+
+        } catch (error) {
+            document.getElementById('loading')?.remove();
+            addMessage("Erreur de connexion au serveur.", 'bot');
+            console.error(error);
+        } finally {
+            if (!document.querySelector('input[placeholder="Redirection vers l\'analyse..."]')) {
+                chatInput.disabled = false;
+                chatInput.focus();
+            }
+        }
+    }
+
+    sendButton.addEventListener('click', sendMessage);
+
+    chatInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
+</body>
+</html>

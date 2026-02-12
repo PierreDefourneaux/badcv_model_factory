@@ -1,7 +1,7 @@
 services:
   container_mcp_server:
     build:
-      context: ./containers/mcp_server_ctn_dir
+      context: ./containers/mcp_server
       dockerfile: Dockerfile.mcp_server
     volumes:
       - ./datas_server:/app/badia_server_files
