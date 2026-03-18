@@ -1,0 +1,18 @@
+# Chemin racine vers le dossier de données
+path: ./
+
+# Chemins relatifs vers les dossiers d'images
+train: images/train
+val: images/val
+
+# Configuration du squelette
+# 24 points au total, 3 valeurs par point (x, y, visibilité)
+kpt_shape: [24, 3] 
+
+# Définition des classes
+names:
+  0: 24points
+
+# Mapping de symétrie (miroir horizontal) pour les 24 points
+# Format: l'index 0 s'échange avec l'index 4, l'index 1 avec le 3, etc.
+flip_idx: [4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 21, 20, 23, 22]

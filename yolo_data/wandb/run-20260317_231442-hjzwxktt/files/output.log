@@ -1,0 +1,83 @@
+New https://pypi.org/project/ultralytics/8.4.23 available 😃 Update with 'pip install -U ultralytics'
+Ultralytics 8.3.240 🚀 Python-3.12.12 torch-2.9.1+cu128 CUDA:0 (Quadro T1000, 4096MiB)
+[34m[1mengine/trainer: [0magnostic_nms=False, amp=True, augment=False, auto_augment=randaugment, batch=8, bgr=0.0, box=7.5, cache=False, cfg=None, classes=None, close_mosaic=10, cls=0.5, compile=False, conf=None, copy_paste=0.0, copy_paste_mode=flip, cos_lr=False, cutmix=0.0, data=badminton.yaml, degrees=10.0, deterministic=True, device=0, dfl=1.5, dnn=False, dropout=0.0, dynamic=False, embed=None, epochs=5, erasing=0.4, exist_ok=False, fliplr=0.5, flipud=0.0, format=torchscript, fraction=1.0, freeze=None, half=False, hsv_h=0.015, hsv_s=0.4, hsv_v=0.4, imgsz=640, int8=False, iou=0.7, keras=False, kobj=1.0, line_width=None, lr0=0.01, lrf=0.01, mask_ratio=4, max_det=300, mixup=0.0, mode=train, model=yolov8n-pose.pt, momentum=0.937, mosaic=1.0, multi_scale=False, name=run_v1, nbs=64, nms=False, opset=None, optimize=False, optimizer=auto, overlap_mask=True, patience=20, perspective=0.0, plots=True, pose=12.0, pretrained=True, profile=False, project=badminton_project_local, rect=False, resume=False, retina_masks=False, save=True, save_conf=False, save_crop=False, save_dir=/home/pierre/badCV_model_factory/yolo_data/badminton_project_local/run_v1, save_frames=False, save_json=False, save_period=-1, save_txt=False, scale=0.5, seed=0, shear=0.0, show=False, show_boxes=True, show_conf=True, show_labels=True, simplify=True, single_cls=False, source=None, split=val, stream_buffer=False, task=pose, time=None, tracker=botsort.yaml, translate=0.1, val=True, verbose=True, vid_stride=1, visualize=False, warmup_bias_lr=0.1, warmup_epochs=3.0, warmup_momentum=0.8, weight_decay=0.0005, workers=1, workspace=None
+Overriding model.yaml kpt_shape=[17, 3] with kpt_shape=[24, 3]
+
+                   from  n    params  module                                       arguments
+  0                  -1  1       464  ultralytics.nn.modules.conv.Conv             [3, 16, 3, 2]
+  1                  -1  1      4672  ultralytics.nn.modules.conv.Conv             [16, 32, 3, 2]
+  2                  -1  1      7360  ultralytics.nn.modules.block.C2f             [32, 32, 1, True]
+  3                  -1  1     18560  ultralytics.nn.modules.conv.Conv             [32, 64, 3, 2]
+  4                  -1  2     49664  ultralytics.nn.modules.block.C2f             [64, 64, 2, True]
+  5                  -1  1     73984  ultralytics.nn.modules.conv.Conv             [64, 128, 3, 2]
+  6                  -1  2    197632  ultralytics.nn.modules.block.C2f             [128, 128, 2, True]
+  7                  -1  1    295424  ultralytics.nn.modules.conv.Conv             [128, 256, 3, 2]
+  8                  -1  1    460288  ultralytics.nn.modules.block.C2f             [256, 256, 1, True]
+  9                  -1  1    164608  ultralytics.nn.modules.block.SPPF            [256, 256, 5]
+ 10                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+ 11             [-1, 6]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 12                  -1  1    148224  ultralytics.nn.modules.block.C2f             [384, 128, 1]
+ 13                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+ 14             [-1, 4]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 15                  -1  1     37248  ultralytics.nn.modules.block.C2f             [192, 64, 1]
+ 16                  -1  1     36992  ultralytics.nn.modules.conv.Conv             [64, 64, 3, 2]
+ 17            [-1, 12]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 18                  -1  1    123648  ultralytics.nn.modules.block.C2f             [192, 128, 1]
+ 19                  -1  1    147712  ultralytics.nn.modules.conv.Conv             [128, 128, 3, 2]
+ 20             [-1, 9]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 21                  -1  1    493056  ultralytics.nn.modules.block.C2f             [384, 256, 1]
+ 22        [15, 18, 21]  1   1198411  ultralytics.nn.modules.head.Pose             [1, [24, 3], [64, 128, 256]]
+YOLOv8n-pose summary: 144 layers, 3,457,947 parameters, 3,457,931 gradients, 10.0 GFLOPs
+
+Transferred 361/397 items from pretrained weights
+Freezing layer 'model.22.dfl.conv.weight'
+WARNING ⚠️ [34m[1mAMP: [0mchecks failed ❌. AMP training on Quadro T1000 GPU may cause NaN losses or zero-mAP results, so AMP will be disabled during training.
+[34m[1mtrain: [0mFast image access ✅ (ping: 0.0±0.0 ms, read: 217.1±58.1 MB/s, size: 1640.4 KB)
+[K[34m[1mtrain: [0mScanning /home/pierre/badCV_model_factory/yolo_data/labels/train.cache... 432 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 432/432 1.7Mit/s 0.0s0s
+WARNING ⚠️ No 'flip_idx' array defined in data.yaml, disabling 'fliplr' and 'flipud' augmentations.
+[34m[1mval: [0mFast image access ✅ (ping: 0.0±0.0 ms, read: 231.3±68.9 MB/s, size: 1374.5 KB)
+[K[34m[1mval: [0mScanning /home/pierre/badCV_model_factory/yolo_data/labels/val.cache... 108 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 108/108 40.6Kit/s 0.0ss
+Plotting labels to /home/pierre/badCV_model_factory/yolo_data/badminton_project_local/run_v1/labels.jpg...
+[34m[1moptimizer:[0m 'optimizer=auto' found, ignoring 'lr0=0.01' and 'momentum=0.937' and determining best 'optimizer', 'lr0' and 'momentum' automatically...
+[34m[1moptimizer:[0m AdamW(lr=0.002, momentum=0.9) with parameter groups 63 weight(decay=0.0), 73 weight(decay=0.0005), 72 bias(decay=0.0)
+Image sizes 640 train, 640 val
+Using 1 dataloader workers
+Logging results to [1m/home/pierre/badCV_model_factory/yolo_data/badminton_project_local/run_v1[0m
+Starting training for 5 epochs...
+
+      Epoch    GPU_mem   box_loss  pose_loss  kobj_loss   cls_loss   dfl_loss  Instances       Size
+[K        1/5      2.19G      1.292      11.23     0.6809      1.319       1.62         16        640: 100% ━━━━━━━━━━━━ 54/54 2.1it/s 25.7s0.4ss
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Pose(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 7/7 2.8it/s 2.5s0.4s
+                   all        108        108      0.999          1      0.995      0.682          0          0          0          0
+
+      Epoch    GPU_mem   box_loss  pose_loss  kobj_loss   cls_loss   dfl_loss  Instances       Size
+[K        2/5      2.05G     0.7963      9.988     0.6144     0.5145      1.186         25        640: 100% ━━━━━━━━━━━━ 54/54 1.8it/s 30.3s0.6ss
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Pose(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 7/7 3.0it/s 2.3s0.4s
+                   all        108        108      0.999          1      0.995      0.879          0          0          0          0
+
+      Epoch    GPU_mem   box_loss  pose_loss  kobj_loss   cls_loss   dfl_loss  Instances       Size
+[K        3/5      2.05G     0.7446      9.105     0.5749     0.4753      1.157         20        640: 100% ━━━━━━━━━━━━ 54/54 1.7it/s 32.2s0.6ss
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Pose(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 7/7 2.7it/s 2.6s0.4s
+                   all        108        108      0.999          1      0.995      0.842          0          0          0          0
+
+      Epoch    GPU_mem   box_loss  pose_loss  kobj_loss   cls_loss   dfl_loss  Instances       Size
+[K        4/5      2.05G     0.6675      8.566     0.5422     0.4368      1.096         19        640: 100% ━━━━━━━━━━━━ 54/54 1.7it/s 32.1s0.6ss
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Pose(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 7/7 2.7it/s 2.6s0.5s
+                   all        108        108      0.999          1      0.995       0.93          0          0          0          0
+
+      Epoch    GPU_mem   box_loss  pose_loss  kobj_loss   cls_loss   dfl_loss  Instances       Size
+[K        5/5      2.05G     0.5562      8.122     0.5254     0.3825       1.05         28        640: 100% ━━━━━━━━━━━━ 54/54 1.7it/s 32.6s0.6ss
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Pose(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 7/7 2.7it/s 2.6s0.4s
+                   all        108        108      0.999          1      0.995      0.872          0          0          0          0
+
+5 epochs completed in 0.047 hours.
+Optimizer stripped from /home/pierre/badCV_model_factory/yolo_data/badminton_project_local/run_v1/weights/last.pt, 7.1MB
+Optimizer stripped from /home/pierre/badCV_model_factory/yolo_data/badminton_project_local/run_v1/weights/best.pt, 7.1MB
+
+Validating /home/pierre/badCV_model_factory/yolo_data/badminton_project_local/run_v1/weights/best.pt...
+Ultralytics 8.3.240 🚀 Python-3.12.12 torch-2.9.1+cu128 CUDA:0 (Quadro T1000, 4096MiB)
+YOLOv8n-pose summary (fused): 81 layers, 3,452,315 parameters, 0 gradients, 9.9 GFLOPs
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Pose(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 7/7 1.9it/s 3.6s0.5s
+                   all        108        108      0.999          1      0.995      0.929          0          0          0          0
+Speed: 0.3ms preprocess, 12.9ms inference, 0.0ms loss, 1.9ms postprocess per image
+Results saved to [1m/home/pierre/badCV_model_factory/yolo_data/badminton_project_local/run_v1[0m

@@ -1,0 +1,51 @@
+_wandb:
+    value:
+        cli_version: 0.25.1
+        e:
+            hgtwvhu6fuysidmt8y6x5s23p02g96jm:
+                codePath: yolo_data/train_ultralytics.py
+                codePathLocal: train_ultralytics.py
+                cpu_count: 2
+                cpu_count_logical: 4
+                cudaVersion: "12.8"
+                disk:
+                    /:
+                        total: "1081101176832"
+                        used: "122160144384"
+                email: pierre.defourneaux@gmail.com
+                executable: /home/pierre/badCV_model_factory/.venv/bin/python3
+                git:
+                    commit: baea70705d1d4db49815bf8cf997133bd6bfc583
+                    remote: https://github.com/PierreDefourneaux/oldBADIA.git
+                gpu: Quadro T1000
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Turing
+                      memoryTotal: "4294967296"
+                      name: Quadro T1000
+                      uuid: GPU-8844de25-3b72-42d3-02c8-e5409c91e673
+                host: GDO-PC-PF2AN9EZ
+                memory:
+                    total: "4107513856"
+                os: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39
+                program: /home/pierre/badCV_model_factory/yolo_data/train_ultralytics.py
+                python: CPython 3.12.12
+                root: /home/pierre/badCV_model_factory/yolo_data
+                startedAt: "2026-03-17T22:28:07.702155Z"
+                writerId: hgtwvhu6fuysidmt8y6x5s23p02g96jm
+        m: []
+        python_version: 3.12.12
+        t:
+            "1":
+                - 1
+                - 41
+            "2":
+                - 1
+                - 41
+            "3":
+                - 2
+                - 13
+            "4": 3.12.12
+            "5": 0.25.1
+            "12": 0.25.1
+            "13": linux-x86_64

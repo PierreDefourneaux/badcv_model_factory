@@ -1,0 +1,39 @@
+{
+  "os": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "CPython 3.12.12",
+  "startedAt": "2026-03-17T22:28:07.702155Z",
+  "program": "/home/pierre/badCV_model_factory/yolo_data/train_ultralytics.py",
+  "codePath": "yolo_data/train_ultralytics.py",
+  "codePathLocal": "train_ultralytics.py",
+  "git": {
+    "remote": "https://github.com/PierreDefourneaux/oldBADIA.git",
+    "commit": "baea70705d1d4db49815bf8cf997133bd6bfc583"
+  },
+  "email": "pierre.defourneaux@gmail.com",
+  "root": "/home/pierre/badCV_model_factory/yolo_data",
+  "host": "GDO-PC-PF2AN9EZ",
+  "executable": "/home/pierre/badCV_model_factory/.venv/bin/python3",
+  "cpu_count": 2,
+  "cpu_count_logical": 4,
+  "gpu": "Quadro T1000",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "1081101176832",
+      "used": "122160144384"
+    }
+  },
+  "memory": {
+    "total": "4107513856"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "Quadro T1000",
+      "memoryTotal": "4294967296",
+      "architecture": "Turing",
+      "uuid": "GPU-8844de25-3b72-42d3-02c8-e5409c91e673"
+    }
+  ],
+  "cudaVersion": "12.8",
+  "writerId": "hgtwvhu6fuysidmt8y6x5s23p02g96jm"
+}

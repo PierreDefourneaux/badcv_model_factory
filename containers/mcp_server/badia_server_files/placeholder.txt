@@ -1,1 +1,0 @@
-Ici seront stockées les datas du projet badia qui ne vont pas en base de données.
