@@ -12,7 +12,7 @@ wheels/
 **/.venv
 
 #folders
-yolo_data_videos_amatrices
+yolo_data_videos_amatrices/
 
 # My Files
 dev.ipynb
