@@ -2,46 +2,20 @@ import cv2
 from ultralytics import YOLO
 import numpy as np
 
-# --- CONFIGURATION ---
-MODEL_PATH = 'badminton_project/run_v118/weights/best.pt'
-VIDEO_PATH = 'video_test1.mp4' # Ta vidéo de test
-OUTPUT_PATH = 'video_test6_result_lines_v118.mp4'
+
+MODEL_PATH = 'badminton_project/100_epochs/weights/best.pt'
+VIDEO_PATH = 'video_test1.mp4'
+OUTPUT_PATH = 'video_result_100_epochs.mp4'
 CONF_THRESHOLD = 0.5  # Ignore les points incertains
 
 
 
 COURT_CONNECTIONS = [
-    (0, 19), (19, 18), (16, 15), (15, 14), 
-    (18, 17), 
-    (17, 16),
-    
-    (1, 13), 
-    
-    (2, 12),
-    
-    (3, 11),
-    
-    (4, 5), (5, 6), (6, 7), (8, 9), (9, 10),
-    (6, 7),
-    (7, 8),
-
-
-    (0, 1), (1, 2), (2, 3), (3, 4),
-    
-    (19, 5),
-    
-    (18, 6),
-    
-    (17, 7),
-    
-    (16, 8),
-    
-    (15, 9),
-    
+    (0, 19), (19, 18), (16, 15), (15, 14), (18, 17), (17, 16), (1, 13), (2, 12),
+    (3, 11), (4, 5), (5, 6), (6, 7), (8, 9), (9, 10), (6, 7), (7, 8), (0, 1), 
+    (1, 2), (2, 3), (3, 4), (19, 5), (18, 6), (17, 7), (16, 8), (15, 9),    
     (14, 13), (13, 12), (12, 11), (11, 10)
 ]
-
-# Le Filet (Lignes Rouges)
 NET_CONNECTIONS = [
     (20, 21), 
     (23, 22), 
@@ -80,7 +54,6 @@ def main():
         for r in results:
             if r.keypoints is not None and r.keypoints.xy.numel() > 0:
                 # Récupérer les keypoints (x, y)
-                # shape: (num_personnes, 24, 2) -> on prend la personne 0
                 kpts = r.keypoints.xy[0].cpu().numpy()
                 
                 # --- DESSIN DU TERRAIN (VERT) ---
