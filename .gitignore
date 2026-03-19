@@ -17,6 +17,7 @@ yolo_data_videos_amatrices/
 # My Files
 dev.ipynb
 .env
+.ipynb
 
 # Images
 *.png

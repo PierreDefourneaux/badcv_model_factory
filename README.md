@@ -1,6 +1,6 @@
 ## Pour entraîner le modèle :
 ```bash
-cd /home/pierre/badCV_model_factory/yolo_data
+cd /home/user/badCV_model_factory/yolo_data
 uv run train_utraltics.py
 ```
 
@@ -13,6 +13,6 @@ MODEL_PATH = 'badminton_project/100_epochs/weights/best.pt'
 ```
 
 ```bash
-cd /home/pierre/badCV_model_factory/yolo_data
+cd /home/user/badCV_model_factory/yolo_data
 uv test_lines.py
 ```
