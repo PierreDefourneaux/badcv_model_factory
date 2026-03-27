@@ -54,7 +54,7 @@ wheels = [
 ]
 
 [[package]]
-name = "badia"
+name = "badcv-model-factory"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

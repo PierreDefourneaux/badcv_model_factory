@@ -1,7 +1,7 @@
 ## Pour entraîner le modèle :
 ```bash
 cd /home/user/badCV_model_factory/yolo_data
-uv run train_utraltics.py
+uv run train_ultralytics.py
 ```
 
 Pour suivre le monitoring dans **Wandb.ia** : `ctrl+clic gauche` sur l'url qui apparait dans le terminal
